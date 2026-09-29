@@ -1,0 +1,21 @@
+name: 验证 Melody 相机
+on:
+  push:
+  pull_request:
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: macos-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - name: 运行领域、图像及应用流程测试
+        run: swift test
+      - name: 构建 Mac 版
+        run: swift build
+      - name: 无签名构建 iOS 模拟器版本
+        run: >-
+          xcodebuild -project MelodyCamera.xcodeproj -scheme MelodyCamera
+          -sdk iphonesimulator -destination 'generic/platform=iOS Simulator'
+          -derivedDataPath DerivedData CODE_SIGNING_ALLOWED=NO build

@@ -1,0 +1,12 @@
+.build/
+.swiftpm/
+.DS_Store
+DerivedData/
+*.xcuserstate
+xcuserdata/
+.env
+.env.*
+!.env.example
+artifacts/
+*.litertlm
+*.gguf

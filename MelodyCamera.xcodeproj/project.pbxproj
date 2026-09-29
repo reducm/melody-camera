@@ -1,0 +1,379 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 77;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		09E3385EE0746E0B08DD2A97 /* KeyStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A87BDC4BCBA59659ADC9B810 /* KeyStore.swift */; };
+		1E50E52889AC63A2A61CD3EA /* ProviderSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFC96AA74CA90184051B8DB7 /* ProviderSettings.swift */; };
+		26861A03CDCC8B7D7A019778 /* MelodyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0BC697879F50842064809B8 /* MelodyApp.swift */; };
+		2704747AE59FF162EA4A6F17 /* NetworkTransport.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECAE9F43952D425ABA73D4F4 /* NetworkTransport.swift */; };
+		353EB40FCD87E971E0E3692F /* MelodyCore in Frameworks */ = {isa = PBXBuildFile; productRef = 1A8962C1EC838ED63FF049EA /* MelodyCore */; };
+		4BC8F8AA127F5CF455BC6903 /* StudioModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD29B4CB2874C769CE0F0684 /* StudioModel.swift */; };
+		72F623E836C75A0D704C484F /* CameraOperating.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C9B09C8156864D54D956C13 /* CameraOperating.swift */; };
+		86A8690127C76798D5C18597 /* MelodyImaging in Frameworks */ = {isa = PBXBuildFile; productRef = 37FCB30D5CF85A595A0A9543 /* MelodyImaging */; };
+		B18D4D96CCDC899E49BECAF4 /* StudioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 125FEF1AE132DAF990F4A633 /* StudioView.swift */; };
+		BB368ECF5A57D2354346C7F4 /* PhotoEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1ECBAE6EDC09BAF1E123E88 /* PhotoEditor.swift */; };
+		C538A9AE0AE7C07BD0945954 /* CameraController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DBB0750CAAF167B2D36B6E5 /* CameraController.swift */; };
+		E37C401ECC8DF1B22A233882 /* DemoScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9370E209EE61A25D94D9247A /* DemoScene.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		125FEF1AE132DAF990F4A633 /* StudioView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudioView.swift; sourceTree = "<group>"; };
+		57F6C50736D0D66BD3AC27B8 /* MelodyCamera.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = MelodyCamera.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		5DBB0750CAAF167B2D36B6E5 /* CameraController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraController.swift; sourceTree = "<group>"; };
+		6C9B09C8156864D54D956C13 /* CameraOperating.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraOperating.swift; sourceTree = "<group>"; };
+		6FD71742FA6C07A0922FD048 /* melody-camera */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "melody-camera"; path = .; sourceTree = SOURCE_ROOT; };
+		9370E209EE61A25D94D9247A /* DemoScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoScene.swift; sourceTree = "<group>"; };
+		A87BDC4BCBA59659ADC9B810 /* KeyStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyStore.swift; sourceTree = "<group>"; };
+		AD29B4CB2874C769CE0F0684 /* StudioModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudioModel.swift; sourceTree = "<group>"; };
+		ECAE9F43952D425ABA73D4F4 /* NetworkTransport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkTransport.swift; sourceTree = "<group>"; };
+		F0BC697879F50842064809B8 /* MelodyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MelodyApp.swift; sourceTree = "<group>"; };
+		F1ECBAE6EDC09BAF1E123E88 /* PhotoEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoEditor.swift; sourceTree = "<group>"; };
+		FFC96AA74CA90184051B8DB7 /* ProviderSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProviderSettings.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		C6835E492F3AA03AA935800E /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				353EB40FCD87E971E0E3692F /* MelodyCore in Frameworks */,
+				86A8690127C76798D5C18597 /* MelodyImaging in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		6B7EB51243A7C63526B28DDB /* MelodyApp */ = {
+			isa = PBXGroup;
+			children = (
+				5DBB0750CAAF167B2D36B6E5 /* CameraController.swift */,
+				6C9B09C8156864D54D956C13 /* CameraOperating.swift */,
+				9370E209EE61A25D94D9247A /* DemoScene.swift */,
+				A87BDC4BCBA59659ADC9B810 /* KeyStore.swift */,
+				F0BC697879F50842064809B8 /* MelodyApp.swift */,
+				ECAE9F43952D425ABA73D4F4 /* NetworkTransport.swift */,
+				F1ECBAE6EDC09BAF1E123E88 /* PhotoEditor.swift */,
+				FFC96AA74CA90184051B8DB7 /* ProviderSettings.swift */,
+				AD29B4CB2874C769CE0F0684 /* StudioModel.swift */,
+				125FEF1AE132DAF990F4A633 /* StudioView.swift */,
+			);
+			name = MelodyApp;
+			path = Sources/MelodyApp;
+			sourceTree = "<group>";
+		};
+		821B8614A27995C8077B2FCD = {
+			isa = PBXGroup;
+			children = (
+				6B7EB51243A7C63526B28DDB /* MelodyApp */,
+				C177D34DB634891EEE39C450 /* Packages */,
+				E3DDA1B2CA4CCA035EB0C60F /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		C177D34DB634891EEE39C450 /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				6FD71742FA6C07A0922FD048 /* melody-camera */,
+			);
+			name = Packages;
+			sourceTree = "<group>";
+		};
+		E3DDA1B2CA4CCA035EB0C60F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				57F6C50736D0D66BD3AC27B8 /* MelodyCamera.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		D31BA4375E5B2C870962BF41 /* MelodyCamera */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DB461E5231D4A188F873036A /* Build configuration list for PBXNativeTarget "MelodyCamera" */;
+			buildPhases = (
+				F1B07ED183E1E5532D57B019 /* Sources */,
+				C6835E492F3AA03AA935800E /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MelodyCamera;
+			packageProductDependencies = (
+				1A8962C1EC838ED63FF049EA /* MelodyCore */,
+				37FCB30D5CF85A595A0A9543 /* MelodyImaging */,
+			);
+			productName = MelodyCamera;
+			productReference = 57F6C50736D0D66BD3AC27B8 /* MelodyCamera.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		146A69CAEC00278BDAFCFBB5 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				BuildIndependentTargetsInParallel = YES;
+				LastUpgradeCheck = 1430;
+				TargetAttributes = {
+					D31BA4375E5B2C870962BF41 = {
+						DevelopmentTeam = "";
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = 703153C3C08FC50821D5C2DA /* Build configuration list for PBXProject "MelodyCamera" */;
+			developmentRegion = "zh-Hans";
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				Base,
+				"zh-Hans",
+			);
+			mainGroup = 821B8614A27995C8077B2FCD;
+			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				42A4556B8259F03EB6A7A0EA /* XCLocalSwiftPackageReference "." */,
+			);
+			preferredProjectObjectVersion = 77;
+			productRefGroup = E3DDA1B2CA4CCA035EB0C60F /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D31BA4375E5B2C870962BF41 /* MelodyCamera */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXSourcesBuildPhase section */
+		F1B07ED183E1E5532D57B019 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C538A9AE0AE7C07BD0945954 /* CameraController.swift in Sources */,
+				72F623E836C75A0D704C484F /* CameraOperating.swift in Sources */,
+				E37C401ECC8DF1B22A233882 /* DemoScene.swift in Sources */,
+				09E3385EE0746E0B08DD2A97 /* KeyStore.swift in Sources */,
+				26861A03CDCC8B7D7A019778 /* MelodyApp.swift in Sources */,
+				2704747AE59FF162EA4A6F17 /* NetworkTransport.swift in Sources */,
+				BB368ECF5A57D2354346C7F4 /* PhotoEditor.swift in Sources */,
+				1E50E52889AC63A2A61CD3EA /* ProviderSettings.swift in Sources */,
+				4BC8F8AA127F5CF455BC6903 /* StudioModel.swift in Sources */,
+				B18D4D96CCDC899E49BECAF4 /* StudioView.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		5B658F065753F53470F41E12 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = "";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 0.1.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+		7759CEEF8E88A5B8A16B09D7 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = ios/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.melody.camera;
+				SDKROOT = iphoneos;
+				SUPPORTS_MACCATALYST = NO;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		916BA671A24621CE9F2AC163 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				CURRENT_PROJECT_VERSION = 1;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEVELOPMENT_TEAM = "";
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"$(inherited)",
+					"DEBUG=1",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 0.1.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		F1542A8DDCACA4DF8E424997 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				INFOPLIST_FILE = ios/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.melody.camera;
+				SDKROOT = iphoneos;
+				SUPPORTS_MACCATALYST = NO;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		703153C3C08FC50821D5C2DA /* Build configuration list for PBXProject "MelodyCamera" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				916BA671A24621CE9F2AC163 /* Debug */,
+				5B658F065753F53470F41E12 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+		DB461E5231D4A188F873036A /* Build configuration list for PBXNativeTarget "MelodyCamera" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7759CEEF8E88A5B8A16B09D7 /* Debug */,
+				F1542A8DDCACA4DF8E424997 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Debug;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		42A4556B8259F03EB6A7A0EA /* XCLocalSwiftPackageReference "." */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = .;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		1A8962C1EC838ED63FF049EA /* MelodyCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = MelodyCore;
+		};
+		37FCB30D5CF85A595A0A9543 /* MelodyImaging */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = MelodyImaging;
+		};
+/* End XCSwiftPackageProductDependency section */
+	};
+	rootObject = 146A69CAEC00278BDAFCFBB5 /* Project object */;
+}
