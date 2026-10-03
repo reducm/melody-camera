@@ -1,0 +1,18 @@
+{
+  "sampler": 17,
+  "strength": 1,
+  "shift": 3,
+  "resolutionDependentShift": false,
+  "loras": [
+    {
+      "mode": "all",
+      "file": "qwen_image_edit_2511_lightning_4_step_v1.0_lora_f16.ckpt",
+      "weight": 1,
+      "version": "qwen_image"
+    }
+  ],
+  "tiledDecoding": false,
+  "tiledDiffusion": false,
+  "hiresFix": false,
+  "teaCache": false
+}

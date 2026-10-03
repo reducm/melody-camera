@@ -11,8 +11,8 @@ enum CameraFailure: Error, LocalizedError {
     case permission, unavailable, busy, capture, timeout
     var errorDescription: String? {
         switch self {
-        case .permission: return "相机权限未开启，请到系统设置允许 Melody 使用相机；也可以先体验演示。"
-        case .unavailable: return "当前设备没有可用相机，Mac 或模拟器请使用演示或导入照片。"
+        case .permission: return "相机权限未开启，请到系统设置允许 Melody 使用相机；也可以从相册选择照片。"
+        case .unavailable: return "当前设备没有可用相机，请从相册选择照片继续。"
         case .busy: return "相机正在拍摄，请稍候。"
         case .capture: return "拍摄失败，请重新启动相机。"
         case .timeout: return "相机响应超时，请重新启动相机。"

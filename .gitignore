@@ -10,3 +10,36 @@ xcuserdata/
 artifacts/
 *.litertlm
 *.gguf
+
+__pycache__/
+
+# 本机模型、运行产物与签名材料
+*.ckpt
+*.ckpt-tensordata
+*.safetensors
+*.onnx
+*.tflite
+*.mlmodelc/
+*.mlpackage/
+*.log
+*.xcresult/
+*.xcarchive/
+*.dSYM/
+*.app/
+*.ipa
+*.p12
+*.pfx
+*.mobileprovision
+*.provisionprofile
+build/
+
+# 迁移时的备份快照，不包含之后的开发成果
+/melody-camera-history.bundle
+/迁移文件清单.sha256
+
+# 开发时的本机数据和私有配置
+/models/
+/private/
+/Projects/
+/ReferenceDrafts/
+/Diagnostics/

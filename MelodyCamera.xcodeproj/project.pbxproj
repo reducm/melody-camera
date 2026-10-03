@@ -7,32 +7,60 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		094E147CC46293BD821A62EB /* MelodyImaging in Frameworks */ = {isa = PBXBuildFile; productRef = 37FCB30D5CF85A595A0A9543 /* MelodyImaging */; };
 		09E3385EE0746E0B08DD2A97 /* KeyStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A87BDC4BCBA59659ADC9B810 /* KeyStore.swift */; };
 		1E50E52889AC63A2A61CD3EA /* ProviderSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = FFC96AA74CA90184051B8DB7 /* ProviderSettings.swift */; };
 		26861A03CDCC8B7D7A019778 /* MelodyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0BC697879F50842064809B8 /* MelodyApp.swift */; };
 		2704747AE59FF162EA4A6F17 /* NetworkTransport.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECAE9F43952D425ABA73D4F4 /* NetworkTransport.swift */; };
-		353EB40FCD87E971E0E3692F /* MelodyCore in Frameworks */ = {isa = PBXBuildFile; productRef = 1A8962C1EC838ED63FF049EA /* MelodyCore */; };
+		279C4DD20E477A0FCCC6CD29 /* ReferenceViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = D41F0112675119A59EB853BC /* ReferenceViews.swift */; };
+		27EA75C5CBF27414925BF50F /* DiagnosticLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 925D208E7158DE5C30F5BF07 /* DiagnosticLog.swift */; };
+		2E9373354D8297BAE80FC7DF /* ModelDiagnostics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EF617C1886FDBADA6B6C964 /* ModelDiagnostics.swift */; };
+		353EB40FCD87E971E0E3692F /* _MediaGenerationKit in Frameworks */ = {isa = PBXBuildFile; productRef = 6110591102744A89CCDB8714 /* _MediaGenerationKit */; };
 		4BC8F8AA127F5CF455BC6903 /* StudioModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD29B4CB2874C769CE0F0684 /* StudioModel.swift */; };
+		6DFFBE6E4426535722FED977 /* PhotoViewer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E16369825F6CC10E4933B970 /* PhotoViewer.swift */; };
 		72F623E836C75A0D704C484F /* CameraOperating.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6C9B09C8156864D54D956C13 /* CameraOperating.swift */; };
-		86A8690127C76798D5C18597 /* MelodyImaging in Frameworks */ = {isa = PBXBuildFile; productRef = 37FCB30D5CF85A595A0A9543 /* MelodyImaging */; };
+		7E08DCD8854AE96939F8F748 /* SubjectTemplateView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B3EE7BA981C6FAA810312D8F /* SubjectTemplateView.swift */; };
+		85B3B0950C387AECED6AB9D1 /* MelodyCore in Frameworks */ = {isa = PBXBuildFile; productRef = 1A8962C1EC838ED63FF049EA /* MelodyCore */; };
+		86A8690127C76798D5C18597 /* LiteRTLM in Frameworks */ = {isa = PBXBuildFile; productRef = 2ED0D8051045222427C282F1 /* LiteRTLM */; };
+		911471D950283BD4F1F74DF7 /* DrawThingsPhoneEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 895BDC8162BD00A874F7C845 /* DrawThingsPhoneEngine.swift */; };
+		91FA2151B0258770D4FDF1BD /* PhoneReferenceProvider.swift in Sources */ = {isa = PBXBuildFile; fileRef = 527CDDA7E53731C497409336 /* PhoneReferenceProvider.swift */; };
+		A155E9F6821742FF220068E4 /* ProjectViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 68560F3C1DB65454C98E169B /* ProjectViews.swift */; };
 		B18D4D96CCDC899E49BECAF4 /* StudioView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 125FEF1AE132DAF990F4A633 /* StudioView.swift */; };
+		B850A3DEAF6658DD8080559F /* ReferenceGenerationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5AEF6BAEBC3E1F62D72EA0A /* ReferenceGenerationController.swift */; };
 		BB368ECF5A57D2354346C7F4 /* PhotoEditor.swift in Sources */ = {isa = PBXBuildFile; fileRef = F1ECBAE6EDC09BAF1E123E88 /* PhotoEditor.swift */; };
+		BB8A7A2171FE39DE9DAE39C3 /* DiagnosticLogView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0CF9852F9554F7F5ABCF4373 /* DiagnosticLogView.swift */; };
 		C538A9AE0AE7C07BD0945954 /* CameraController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DBB0750CAAF167B2D36B6E5 /* CameraController.swift */; };
+		CED3680A67F6E7885CBF8BA8 /* ReferenceImageClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A4CD467FB5B3DDFCC4B6D7E /* ReferenceImageClient.swift */; };
+		D98881A8797656BC2C55EECE /* DebugProvisioning.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927187B1D6F14798F37AC607 /* DebugProvisioning.swift */; };
 		E37C401ECC8DF1B22A233882 /* DemoScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9370E209EE61A25D94D9247A /* DemoScene.swift */; };
+		EB5812E820DE0AA96EE009A4 /* GemmaPhotoAnalyst.swift in Sources */ = {isa = PBXBuildFile; fileRef = C79AB9A64DF3C46D47A77410 /* GemmaPhotoAnalyst.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0A4CD467FB5B3DDFCC4B6D7E /* ReferenceImageClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReferenceImageClient.swift; sourceTree = "<group>"; };
+		0CF9852F9554F7F5ABCF4373 /* DiagnosticLogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagnosticLogView.swift; sourceTree = "<group>"; };
 		125FEF1AE132DAF990F4A633 /* StudioView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudioView.swift; sourceTree = "<group>"; };
+		3EF617C1886FDBADA6B6C964 /* ModelDiagnostics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelDiagnostics.swift; sourceTree = "<group>"; };
+		527CDDA7E53731C497409336 /* PhoneReferenceProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneReferenceProvider.swift; sourceTree = "<group>"; };
 		57F6C50736D0D66BD3AC27B8 /* MelodyCamera.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = MelodyCamera.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5DBB0750CAAF167B2D36B6E5 /* CameraController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraController.swift; sourceTree = "<group>"; };
+		68560F3C1DB65454C98E169B /* ProjectViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProjectViews.swift; sourceTree = "<group>"; };
 		6C9B09C8156864D54D956C13 /* CameraOperating.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraOperating.swift; sourceTree = "<group>"; };
 		6FD71742FA6C07A0922FD048 /* melody-camera */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "melody-camera"; path = .; sourceTree = SOURCE_ROOT; };
+		895BDC8162BD00A874F7C845 /* DrawThingsPhoneEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawThingsPhoneEngine.swift; sourceTree = "<group>"; };
+		925D208E7158DE5C30F5BF07 /* DiagnosticLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagnosticLog.swift; sourceTree = "<group>"; };
+		927187B1D6F14798F37AC607 /* DebugProvisioning.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugProvisioning.swift; sourceTree = "<group>"; };
 		9370E209EE61A25D94D9247A /* DemoScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoScene.swift; sourceTree = "<group>"; };
 		A87BDC4BCBA59659ADC9B810 /* KeyStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KeyStore.swift; sourceTree = "<group>"; };
 		AD29B4CB2874C769CE0F0684 /* StudioModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudioModel.swift; sourceTree = "<group>"; };
+		B3EE7BA981C6FAA810312D8F /* SubjectTemplateView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubjectTemplateView.swift; sourceTree = "<group>"; };
+		C79AB9A64DF3C46D47A77410 /* GemmaPhotoAnalyst.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GemmaPhotoAnalyst.swift; sourceTree = "<group>"; };
+		D41F0112675119A59EB853BC /* ReferenceViews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReferenceViews.swift; sourceTree = "<group>"; };
+		E16369825F6CC10E4933B970 /* PhotoViewer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoViewer.swift; sourceTree = "<group>"; };
 		ECAE9F43952D425ABA73D4F4 /* NetworkTransport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkTransport.swift; sourceTree = "<group>"; };
 		F0BC697879F50842064809B8 /* MelodyApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MelodyApp.swift; sourceTree = "<group>"; };
 		F1ECBAE6EDC09BAF1E123E88 /* PhotoEditor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoEditor.swift; sourceTree = "<group>"; };
+		F5AEF6BAEBC3E1F62D72EA0A /* ReferenceGenerationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReferenceGenerationController.swift; sourceTree = "<group>"; };
 		FFC96AA74CA90184051B8DB7 /* ProviderSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProviderSettings.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -41,8 +69,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				353EB40FCD87E971E0E3692F /* MelodyCore in Frameworks */,
-				86A8690127C76798D5C18597 /* MelodyImaging in Frameworks */,
+				353EB40FCD87E971E0E3692F /* _MediaGenerationKit in Frameworks */,
+				86A8690127C76798D5C18597 /* LiteRTLM in Frameworks */,
+				85B3B0950C387AECED6AB9D1 /* MelodyCore in Frameworks */,
+				094E147CC46293BD821A62EB /* MelodyImaging in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -54,14 +84,27 @@
 			children = (
 				5DBB0750CAAF167B2D36B6E5 /* CameraController.swift */,
 				6C9B09C8156864D54D956C13 /* CameraOperating.swift */,
+				927187B1D6F14798F37AC607 /* DebugProvisioning.swift */,
 				9370E209EE61A25D94D9247A /* DemoScene.swift */,
+				925D208E7158DE5C30F5BF07 /* DiagnosticLog.swift */,
+				0CF9852F9554F7F5ABCF4373 /* DiagnosticLogView.swift */,
+				895BDC8162BD00A874F7C845 /* DrawThingsPhoneEngine.swift */,
+				C79AB9A64DF3C46D47A77410 /* GemmaPhotoAnalyst.swift */,
 				A87BDC4BCBA59659ADC9B810 /* KeyStore.swift */,
 				F0BC697879F50842064809B8 /* MelodyApp.swift */,
+				3EF617C1886FDBADA6B6C964 /* ModelDiagnostics.swift */,
 				ECAE9F43952D425ABA73D4F4 /* NetworkTransport.swift */,
+				527CDDA7E53731C497409336 /* PhoneReferenceProvider.swift */,
 				F1ECBAE6EDC09BAF1E123E88 /* PhotoEditor.swift */,
+				E16369825F6CC10E4933B970 /* PhotoViewer.swift */,
+				68560F3C1DB65454C98E169B /* ProjectViews.swift */,
 				FFC96AA74CA90184051B8DB7 /* ProviderSettings.swift */,
+				F5AEF6BAEBC3E1F62D72EA0A /* ReferenceGenerationController.swift */,
+				0A4CD467FB5B3DDFCC4B6D7E /* ReferenceImageClient.swift */,
+				D41F0112675119A59EB853BC /* ReferenceViews.swift */,
 				AD29B4CB2874C769CE0F0684 /* StudioModel.swift */,
 				125FEF1AE132DAF990F4A633 /* StudioView.swift */,
+				B3EE7BA981C6FAA810312D8F /* SubjectTemplateView.swift */,
 			);
 			name = MelodyApp;
 			path = Sources/MelodyApp;
@@ -108,6 +151,8 @@
 			);
 			name = MelodyCamera;
 			packageProductDependencies = (
+				6110591102744A89CCDB8714 /* _MediaGenerationKit */,
+				2ED0D8051045222427C282F1 /* LiteRTLM */,
 				1A8962C1EC838ED63FF049EA /* MelodyCore */,
 				37FCB30D5CF85A595A0A9543 /* MelodyImaging */,
 			);
@@ -125,7 +170,7 @@
 				LastUpgradeCheck = 1430;
 				TargetAttributes = {
 					D31BA4375E5B2C870962BF41 = {
-						DevelopmentTeam = "";
+						DevelopmentTeam = 35PMA35HQU;
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -140,6 +185,8 @@
 			mainGroup = 821B8614A27995C8077B2FCD;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
+				55C4DD39C6C8DAFACA0075E7 /* XCRemoteSwiftPackageReference "draw-things-community" */,
+				0A6EFDBC7F5523B87227E970 /* XCRemoteSwiftPackageReference "LiteRT-LM" */,
 				42A4556B8259F03EB6A7A0EA /* XCLocalSwiftPackageReference "." */,
 			);
 			preferredProjectObjectVersion = 77;
@@ -159,14 +206,27 @@
 			files = (
 				C538A9AE0AE7C07BD0945954 /* CameraController.swift in Sources */,
 				72F623E836C75A0D704C484F /* CameraOperating.swift in Sources */,
+				D98881A8797656BC2C55EECE /* DebugProvisioning.swift in Sources */,
 				E37C401ECC8DF1B22A233882 /* DemoScene.swift in Sources */,
+				27EA75C5CBF27414925BF50F /* DiagnosticLog.swift in Sources */,
+				BB8A7A2171FE39DE9DAE39C3 /* DiagnosticLogView.swift in Sources */,
+				911471D950283BD4F1F74DF7 /* DrawThingsPhoneEngine.swift in Sources */,
+				EB5812E820DE0AA96EE009A4 /* GemmaPhotoAnalyst.swift in Sources */,
 				09E3385EE0746E0B08DD2A97 /* KeyStore.swift in Sources */,
 				26861A03CDCC8B7D7A019778 /* MelodyApp.swift in Sources */,
+				2E9373354D8297BAE80FC7DF /* ModelDiagnostics.swift in Sources */,
 				2704747AE59FF162EA4A6F17 /* NetworkTransport.swift in Sources */,
+				91FA2151B0258770D4FDF1BD /* PhoneReferenceProvider.swift in Sources */,
 				BB368ECF5A57D2354346C7F4 /* PhotoEditor.swift in Sources */,
+				6DFFBE6E4426535722FED977 /* PhotoViewer.swift in Sources */,
+				A155E9F6821742FF220068E4 /* ProjectViews.swift in Sources */,
 				1E50E52889AC63A2A61CD3EA /* ProviderSettings.swift in Sources */,
+				B850A3DEAF6658DD8080559F /* ReferenceGenerationController.swift in Sources */,
+				CED3680A67F6E7885CBF8BA8 /* ReferenceImageClient.swift in Sources */,
+				279C4DD20E477A0FCCC6CD29 /* ReferenceViews.swift in Sources */,
 				4BC8F8AA127F5CF455BC6903 /* StudioModel.swift in Sources */,
 				B18D4D96CCDC899E49BECAF4 /* StudioView.swift in Sources */,
+				7E08DCD8854AE96939F8F748 /* SubjectTemplateView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -212,6 +272,7 @@
 				DEVELOPMENT_TEAM = "";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = x86_64;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -238,6 +299,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 35PMA35HQU;
 				INFOPLIST_FILE = ios/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -289,6 +351,7 @@
 				DEVELOPMENT_TEAM = "";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = x86_64;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -322,6 +385,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = 35PMA35HQU;
 				INFOPLIST_FILE = ios/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -364,14 +428,43 @@
 		};
 /* End XCLocalSwiftPackageReference section */
 
+/* Begin XCRemoteSwiftPackageReference section */
+		0A6EFDBC7F5523B87227E970 /* XCRemoteSwiftPackageReference "LiteRT-LM" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/google-ai-edge/LiteRT-LM";
+			requirement = {
+				kind = exactVersion;
+				version = 0.16.0;
+			};
+		};
+		55C4DD39C6C8DAFACA0075E7 /* XCRemoteSwiftPackageReference "draw-things-community" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/drawthingsai/draw-things-community";
+			requirement = {
+				kind = revision;
+				revision = b5e9fb925ca5394b747e0e98a8c293bbab5091ca;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
 /* Begin XCSwiftPackageProductDependency section */
 		1A8962C1EC838ED63FF049EA /* MelodyCore */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = MelodyCore;
 		};
+		2ED0D8051045222427C282F1 /* LiteRTLM */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0A6EFDBC7F5523B87227E970 /* XCRemoteSwiftPackageReference "LiteRT-LM" */;
+			productName = LiteRTLM;
+		};
 		37FCB30D5CF85A595A0A9543 /* MelodyImaging */ = {
 			isa = XCSwiftPackageProductDependency;
 			productName = MelodyImaging;
+		};
+		6110591102744A89CCDB8714 /* _MediaGenerationKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 55C4DD39C6C8DAFACA0075E7 /* XCRemoteSwiftPackageReference "draw-things-community" */;
+			productName = _MediaGenerationKit;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

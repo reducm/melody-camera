@@ -53,6 +53,7 @@ struct CompositionOverlay: View {
     let subject: SubjectBox?
     let grid: Bool
     let opacity: Double
+    var showPerson = true
     var body: some View {
         Canvas { context, size in
             if grid {
@@ -66,6 +67,7 @@ struct CompositionOverlay: View {
             guard let b = subject else { return }
             let r = CGRect(x:b.x*size.width,y:b.y*size.height,width:b.width*size.width,height:b.height*size.height)
             context.stroke(Path(roundedRect:r,cornerRadius:12),with:.color(Color.melodyLime.opacity(opacity)),style:StrokeStyle(lineWidth:1.2,dash:[6,5]))
+            guard showPerson else { return }
             let head = CGRect(x:r.midX-r.width*0.17,y:r.minY+r.height*0.025,width:r.width*0.34,height:r.height*0.16)
             context.stroke(Path(ellipseIn:head),with:.color(.white.opacity(opacity)),lineWidth:1.6)
             var body = Path()

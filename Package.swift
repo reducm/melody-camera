@@ -6,7 +6,7 @@ let package = Package(
     products: [.library(name: "MelodyImaging", targets: ["MelodyImaging"]), .library(name: "MelodyCore", targets: ["MelodyCore"]), .executable(name: "MelodyCamera", targets: ["MelodyApp"])],
     targets: [
         .target(name: "MelodyCore"),
-        .target(name: "MelodyImaging"),
+        .target(name: "MelodyImaging", dependencies: ["MelodyCore"]),
         .executableTarget(name: "MelodyApp", dependencies: ["MelodyCore", "MelodyImaging"]),
         .testTarget(name: "MelodyImagingTests", dependencies: ["MelodyImaging"]),
         .testTarget(name: "MelodyAppTests", dependencies: ["MelodyApp"]),

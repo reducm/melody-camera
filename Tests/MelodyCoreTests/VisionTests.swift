@@ -79,3 +79,9 @@ private let frame = ObservationFrame(jpeg: Data([0xff,0xd8,0xff,0xd9]), zoom: 1)
     request.cancel()
     await #expect(throws:CancellationError.self) { try await request.value }
 }
+@Test func deepSeekUsesNonThinkingJSONForPhotoGuidance() throws {
+    let request = try VisionRequest.make(config: .init(baseURL: "https://api.deepseek.com", model: "deepseek-flash", apiKey: "test"), frames: [frame], availableZooms: [1])
+    let body = try JSONSerialization.jsonObject(with: request.httpBody!) as! [String: Any]
+    #expect((body["thinking"] as? [String: String])?["type"] == "disabled")
+    #expect((body["response_format"] as? [String: String])?["type"] == "json_object")
+}

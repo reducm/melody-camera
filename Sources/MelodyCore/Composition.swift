@@ -23,8 +23,9 @@ public struct ShotPlan: Codable, Equatable, Identifiable, Sendable {
     public let reason: String
     public let zoom: Double
     public let subject: SubjectBox
-    public init(id: String, title: String, instruction: String, reason: String, zoom: Double, subject: SubjectBox) {
-        self.id = id; self.title = title; self.instruction = instruction; self.reason = reason; self.zoom = zoom; self.subject = subject
+    public let viewpoint: CameraViewpoint?
+    public init(id: String, title: String, instruction: String, reason: String, zoom: Double, subject: SubjectBox, viewpoint: CameraViewpoint? = nil) {
+        self.id = id; self.title = title; self.instruction = instruction; self.reason = reason; self.zoom = zoom; self.subject = subject; self.viewpoint = viewpoint
     }
 }
 public enum CompositionError: Error, LocalizedError, Equatable {

@@ -4,13 +4,14 @@ import Security
 enum KeyStore {
     private static let query: [String: Any] = [kSecClass as String: kSecClassGenericPassword,
         kSecAttrService as String: "com.melody.camera.provider", kSecAttrAccount as String: "personal-key"]
-    static func read() -> String {
-        var q = query; q[kSecReturnData as String] = true; q[kSecMatchLimit as String] = kSecMatchLimitOne
+    static func read(account:String = "personal-key") -> String {
+        var q = query; q[kSecAttrAccount as String] = account; q[kSecReturnData as String] = true; q[kSecMatchLimit as String] = kSecMatchLimitOne
         var result: CFTypeRef?
         guard SecItemCopyMatching(q as CFDictionary, &result) == errSecSuccess, let data = result as? Data else { return "" }
         return String(data: data, encoding: .utf8) ?? ""
     }
-    static func save(_ key: String) throws {
+    static func save(_ key: String, account:String = "personal-key") throws {
+        var query = self.query; query[kSecAttrAccount as String] = account
         if key.isEmpty {
             let status = SecItemDelete(query as CFDictionary)
             guard status == errSecSuccess || status == errSecItemNotFound else {

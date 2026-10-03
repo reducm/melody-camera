@@ -1,6 +1,10 @@
 import SwiftUI
 
 @main struct MelodyApp: App {
+    init() {
+        let version = Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String ?? "开发版"
+        DiagnosticLog.shared.record(.info, .app, "应用启动", detail: "版本 \(version) · 系统 \(ProcessInfo.processInfo.operatingSystemVersionString)")
+    }
     var body: some Scene {
         WindowGroup("Melody · 拍摄练习室") {
             StudioView()

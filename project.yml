@@ -5,11 +5,18 @@ options:
     iOS: "17.0"
   developmentLanguage: zh-Hans
 packages:
+  DrawThings:
+    url: https://github.com/drawthingsai/draw-things-community
+    revision: b5e9fb925ca5394b747e0e98a8c293bbab5091ca
+  LiteRTLM:
+    url: https://github.com/google-ai-edge/LiteRT-LM
+    exactVersion: 0.16.0
   MelodyModules:
     path: .
 settings:
   base:
     SWIFT_VERSION: "5.0"
+    "EXCLUDED_ARCHS[sdk=iphonesimulator*]": x86_64
     CURRENT_PROJECT_VERSION: 1
     MARKETING_VERSION: 0.1.0
     DEVELOPMENT_TEAM: ""
@@ -20,6 +27,10 @@ targets:
     sources:
       - Sources/MelodyApp
     dependencies:
+      - package: DrawThings
+        product: _MediaGenerationKit
+      - package: LiteRTLM
+        product: LiteRTLM
       - package: MelodyModules
         product: MelodyCore
       - package: MelodyModules
@@ -30,6 +41,7 @@ targets:
         TARGETED_DEVICE_FAMILY: "1"
         SUPPORTS_MACCATALYST: NO
         CODE_SIGN_STYLE: Automatic
+        DEVELOPMENT_TEAM: 35PMA35HQU
     info:
       path: ios/Info.plist
       properties:
