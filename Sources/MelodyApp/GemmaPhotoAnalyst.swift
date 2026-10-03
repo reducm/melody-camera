@@ -49,9 +49,10 @@ enum GemmaModelStore {
     }
 }
 struct GemmaPhotoAnalyst: PhotoAnalyzing {
+    var context = AnalysisContext()
     func analyze(frame: ObservationFrame, availableZooms: [Double]) async throws -> PhotoAnalysis {
         let id = ModelDiagnostics.operationID ?? UUID(), start = ContinuousClock.now
-        DiagnosticLog.shared.record(.debug, .analysis, "Gemma 本地模型输入", detail: "Gemma 4 E2B · maxOutputTokens=2500 · visualTokenBudget=280\n" + ModelDiagnostics.imageSummary(frame.jpeg) + "\n\n" + PhotoAnalysisPrompt.make(availableZooms: availableZooms), operationID: id, modelContent: true)
+        DiagnosticLog.shared.record(.debug, .analysis, "Gemma 本地模型输入", detail: "Gemma 4 E2B · contextTokens=8192 · maxOutputTokens=2500 · visualTokenBudget=280\n" + ModelDiagnostics.imageSummary(frame.jpeg) + "\n\n" + PhotoAnalysisPrompt.make(availableZooms: availableZooms, context:context), operationID: id, modelContent: true)
         do {
             let result = try await performAnalysis(frame: frame, availableZooms: availableZooms, operationID: id)
             DiagnosticLog.shared.record(.info, .analysis, "Gemma 分析完成", detail: "耗时 \(ModelDiagnostics.elapsed(since: start)) · 结果通过结构校验", operationID: id)
@@ -81,7 +82,7 @@ struct GemmaPhotoAnalyst: PhotoAnalyzing {
     private func analyzeLocally(frame:ObservationFrame,availableZooms:[Double],operationID:UUID) async throws -> PhotoAnalysis {
         try Task.checkCancellation()
         let engine = Engine(engineConfig: try EngineConfig(modelPath: GemmaModelStore.modelURL.path,
-            backend: .gpu, visionBackend: .cpu(), maxNumTokens: 4096))
+            backend: .gpu, visionBackend: .cpu(), maxNumTokens: 8192))
         try await engine.initialize()
         try Task.checkCancellation()
         let conversation = try await engine.createConversation(with: ConversationConfig(
@@ -89,7 +90,7 @@ struct GemmaPhotoAnalyst: PhotoAnalyzing {
         let result = try await withTaskCancellationHandler {
             try Task.checkCancellation()
             return try await conversation.sendMessage(Message(contents: [
-                .imageData(frame.jpeg), .text(PhotoAnalysisPrompt.make(availableZooms: availableZooms))
+                .imageData(frame.jpeg), .text(PhotoAnalysisPrompt.make(availableZooms: availableZooms, context:context))
             ]), maxOutputTokens: 2500, thinkingConfig: ThinkingConfig(enableThinking: false),
                responseFormat: try ResponseFormat.json(schema: PhotoAnalysisSchema.make(availableZooms: availableZooms)))
         } onCancel: { try? conversation.cancel() }
@@ -101,7 +102,7 @@ struct GemmaPhotoAnalyst: PhotoAnalyzing {
         }
         #endif
         DiagnosticLog.shared.record(.info, .analysis, "Gemma 本地模型输出", detail: result.contents.toString, operationID: operationID, modelContent: true)
-        do { return try PhotoAnalysisCodec.decode(result.contents.toString, availableZooms: availableZooms) }
+        do { return try PhotoAnalysisCodec.decode(result.contents.toString, availableZooms: availableZooms, allowLocalDesign:false) }
         catch { throw LocalModelFailure.invalidResponse }
     }
     #endif

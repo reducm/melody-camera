@@ -15,8 +15,11 @@ import MelodyImaging
     private var tasks: [UUID:Task<Void,Never>] = [:]
     private var images: [UUID:Data] = [:]
     private let injected: (any ReferenceImageGenerating)?
-    init(root:URL? = nil,loadSettings:Bool = true,provider:(any ReferenceImageGenerating)? = nil) {
+    private let outlineExtractor: @Sendable (Data) throws -> [SubjectOutline]
+    init(root:URL? = nil,loadSettings:Bool = true,provider:(any ReferenceImageGenerating)? = nil,
+         outlineExtractor: @escaping @Sendable (Data) throws -> [SubjectOutline] = { try SubjectSegmenter.outlines(in:PhotoProcessor.load($0)) }) {
         self.root=root; injected=provider
+        self.outlineExtractor = outlineExtractor
         enabled=loadSettings ? (UserDefaults.standard.object(forKey:"reference.phone.enabled") as? Bool ?? true) : false
         resolution=loadSettings ? ReferenceResolution(rawValue:UserDefaults.standard.string(forKey:"reference.resolution") ?? "") ?? .square512 : .square512
         if let root {
@@ -27,6 +30,7 @@ import MelodyImaging
                       let data=try? Data(contentsOf:url),var job=try? JSONDecoder().decode(ReferenceJob.self,from:data),job.id.uuidString == folder.lastPathComponent,
                       (try? job.request.validated()) != nil,job.message.count <= 160,job.provider.count <= 100,
                       job.progress.map({ $0.isFinite && (0...1).contains($0) }) ?? true else { continue }
+                if let design = job.design, (try? design.validate(for:job.id)) == nil { continue }
                 if job.isActive { job.state = .cancelled; job.progress=nil; job.message="上次生成已中断，可重试" }
                 jobs.append(job)
             }
@@ -68,13 +72,27 @@ import MelodyImaging
                 // 重新编码，避免把外部元数据和定位写进本机结果。
                 let clean=try await Task.detached { try PhotoProcessor.jpeg(PhotoProcessor.load(data,maxPixel:1536)) }.value
                 try Task.checkCancellation()
+                var designed: ReferenceDesign?
+                // 分割只是提取合成图形状，不等于识别对了主体；留给用户核对。
+                if request.plan.design != nil {
+                    update(job.id,status:.init(id:job.id,state:.running,stage:"正在提取参考图设计轮廓"))
+                    do {
+                        let extractor = outlineExtractor
+                        let worker = Task.detached(priority:.utility) { try extractor(clean) }
+                        let outlines = try await withTaskCancellationHandler { try await worker.value } onCancel: { worker.cancel() }
+                        designed = try ReferenceDesign(jobID:job.id,candidates:outlines)
+                    } catch is CancellationError { throw CancellationError() }
+                    catch { DiagnosticLog.shared.record(.warning,.reference,"参考图轮廓提取未完成，保留构图方案",operationID:job.id) }
+                    try Task.checkCancellation()
+                }
                 if let root {
                     let directory=root.appendingPathComponent(job.id.uuidString)
                     try FileManager.default.createDirectory(at:directory,withIntermediateDirectories:true)
                     try clean.write(to:directory.appendingPathComponent("reference.jpg"),options:.atomic)
                 } else { images[job.id]=clean }
+                if let index = jobs.firstIndex(where: { $0.id == job.id }), jobs[index].isActive { jobs[index].design = designed }
                 DiagnosticLog.shared.record(.info, .reference, "Qwen 生成图输出", detail: ModelDiagnostics.imageSummary(clean), operationID: job.id)
-                finish(job.id,state:.ready,message:"AI 生成参考 · 非实拍")
+                finish(job.id,state:.ready,message:(designed?.candidates.isEmpty == false) ? "AI 生成参考 · 新轮廓待你核对" : "AI 生成参考 · 非实拍；当前构图模板仍可使用")
             } catch is CancellationError { finish(job.id,state:.cancelled,message:"参考图已取消，模板仍可跟拍") }
             catch {
                 if Task.isCancelled { finish(job.id,state:.cancelled,message:"参考图已取消，模板仍可跟拍") }
@@ -108,6 +126,17 @@ import MelodyImaging
     }
     func cancel(_ id:UUID) {
         tasks[id]?.cancel(); finish(id,state:.cancelled,message:"参考图已取消，模板仍可跟拍")
+    }
+    func approveDesign(jobID:UUID,candidateID:Int,checks:ReferenceReviewChecks) throws {
+        guard let index = jobs.firstIndex(where: { $0.id == jobID }), jobs[index].state == .ready,
+              job(projectID:jobs[index].request.projectID,photoID:jobs[index].request.photoID,batchID:jobs[index].request.batchID,planID:jobs[index].request.plan.id)?.id == jobID,
+              var design = jobs[index].design else { throw CompositionError.invalidPlan }
+        try design.approve(candidateID:candidateID,checks:checks,expectedJobID:jobID)
+        jobs[index].design = design; persist(jobs[index])
+    }
+    func revokeDesign(_ jobID:UUID) {
+        guard let index = jobs.firstIndex(where: { $0.id == jobID }), jobs[index].state == .ready else { return }
+        jobs[index].design?.revoke(); persist(jobs[index])
     }
     func suspend() { for job in jobs where job.isActive { cancel(job.id) } }
     func imageData(_ id:UUID) -> Data? {

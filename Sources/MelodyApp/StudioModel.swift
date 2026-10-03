@@ -52,6 +52,7 @@ enum DirectorMode: String, CaseIterable { case offline = "离线构图", online 
     @Published var localModelStatus = GemmaModelStore.isInstalled ? "Gemma 模型已校验并安装" : "尚未导入 Gemma 模型"
     @Published var installingModel = false
     @Published var subjectOutlines: [SubjectOutline] = []
+    @Published var photographyStyle: PhotographyStyle = .natural
     @Published var selectedOutlineID: Int?
     @Published var outlining = false
     @Published var outlineNotice = ""
@@ -92,6 +93,7 @@ enum DirectorMode: String, CaseIterable { case offline = "离线构图", online 
         self.cameraDriver = cameraDriver ?? UnavailableCamera()
         #endif
         if loadCredentials {
+            photographyStyle = PhotographyStyle(rawValue:UserDefaults.standard.string(forKey:"recommendation.style") ?? "") ?? .natural
             do {
                 try DebugProvisioning.consumeReference(into:references)
                 if let config = try DebugProvisioning.consumeProvider() {
@@ -158,10 +160,11 @@ enum DirectorMode: String, CaseIterable { case offline = "离线构图", online 
                 try Task.checkCancellation()
                 zooms = available; zoom = initialZoom; source = .camera; resetPlans(); showEditor = false
                 if let plan {
-                    plans = [plan]; selected = plan; planSource = photoAnalysisSource; guideOutline = selectedOutline
+                    plans = [plan]; selected = plan; planSource = photoAnalysisSource
+                    guideOutline = plan.design?.outline ?? (plan.design == nil ? selectedOutline : nil)
                     showEditor = false
                     if let photo = currentProject?.activePhoto, let batch = photo.selectedBatch {
-                        captureReference = CaptureReference(photoID:photo.id,batchID:batch.id,planID:plan.id,outline:selectedOutline)
+                        captureReference = CaptureReference(photoID:photo.id,batchID:batch.id,planID:plan.id,outline:guideOutline,planSnapshot:plan.design == nil ? nil : plan)
                     }
                 } else { captureReference = nil }
                 DiagnosticLog.shared.record(.info, .camera, "相机已就绪", detail: "可用倍率：\(available)")
@@ -314,6 +317,10 @@ enum DirectorMode: String, CaseIterable { case offline = "离线构图", online 
         let callID = UUID()
         let availableZooms = photoZooms
         let capturedZoom = photoZoom
+        let capturedOutline = selectedOutline
+        let analysisContext = AnalysisContext(style:photographyStyle, selectedBounds:capturedOutline?.bounds, sourceAspect:Double(original.width)/Double(original.height))
+        let expectedPhotoID = currentProject?.activePhotoID
+        let expectedProjectID = currentProject?.id
         let sourceLabel = photoSource == .demo ? "演示画面分析 · 非实拍" : (backend == .gemma ? "本机照片分析" : "在线照片分析")
         DiagnosticLog.shared.record(.info, .analysis, "开始照片分析", detail: backend.rawValue, operationID: callID)
         busy = true; analyzingPhoto = true; progress = "正在分析照片的光线、构图与背景"
@@ -331,14 +338,17 @@ enum DirectorMode: String, CaseIterable { case offline = "离线构图", online 
                     return try PhotoProcessor.jpeg(image, quality: 0.75)
                 }.value
                 try Task.checkCancellation()
-                let analyst: any PhotoAnalyzing = backend == .gemma ? GemmaPhotoAnalyst() : OnlinePhotoAnalyst(config: configuration, transport: photoTransport)
-                let report = try await ModelDiagnostics.$operationID.withValue(callID) {
+                let analyst: any PhotoAnalyzing = backend == .gemma ? GemmaPhotoAnalyst(context:analysisContext) : OnlinePhotoAnalyst(config: configuration, context:analysisContext, transport: photoTransport)
+                let observation = try await ModelDiagnostics.$operationID.withValue(callID) {
                     try await analyst.analyze(frame: .init(jpeg: jpeg, zoom: capturedZoom), availableZooms: availableZooms)
                 }
                 try Task.checkCancellation()
+                guard currentProject?.id == expectedProjectID, currentProject?.activePhotoID == expectedPhotoID else { throw CancellationError() }
+                progress = "正在检索摄影知识并计算目标构图"
+                let report = try RecommendationEngine.recommend(report:observation, context:analysisContext, outline:capturedOutline, availableZooms:availableZooms, capturedZoom:capturedZoom)
                 DiagnosticLog.shared.record(.info, .analysis, "照片分析通过结构校验", detail: "推荐模板数量：\(report.plans.count)", operationID: callID)
                 photoAnalysis = report
-                photoAnalysisSource = sourceLabel + " · " + (backend == .gemma ? "Gemma 4 E2B" : configuration.model)
+                photoAnalysisSource = sourceLabel + " · " + (backend == .gemma ? "Gemma 4 E2B" : configuration.model) + " · 摄影知识规则 v1"
                 currentProject?.addRecommendation(report, source: photoAnalysisSource)
                 persistCurrentProject()
                 notice = "已保存这一轮推荐，选择模板开始跟拍。"
@@ -374,13 +384,22 @@ enum DirectorMode: String, CaseIterable { case offline = "离线构图", online 
             catch { localModelStatus = "Gemma 安装失败"; DiagnosticLog.shared.failure(error, .model, "Gemma 安装失败"); self.error = error.localizedDescription }
         }
     }
+    func savePhotographyStyle() { UserDefaults.standard.set(photographyStyle.rawValue,forKey:"recommendation.style") }
+    func planForFollowing(_ plan: ShotPlan) -> ShotPlan {
+        guard let project = currentProject, let photo = project.activePhoto, let batch = photo.selectedBatch,
+              let job = references.job(projectID:project.id,photoID:photo.id,batchID:batch.id,planID:plan.id),
+              job.state == .ready, let design = job.design, design.approvedOutline != nil,
+              let adopted = try? plan.adopting(design) else { return plan }
+        return adopted
+    }
     func applyPhotoPlan(_ plan: ShotPlan) {
         guard !busy, photoAnalysis?.plans.contains(plan) == true else { return }
+        let plan = planForFollowing(plan)
         #if os(iOS)
         startCamera(plan: plan)
         #else
         plans = photoAnalysis?.plans ?? []; planSource = photoAnalysisSource
-        choose(plan); showEditor = false
+        choose(plan); guideOutline = plan.design?.outline ?? (plan.design == nil ? selectedOutline : nil); showEditor = false
         #endif
     }
     func suspend() {

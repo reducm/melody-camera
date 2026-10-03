@@ -153,6 +153,11 @@ struct PhotoEditor: View {
                 Text("点击生成推荐才上传；原片与历史仅保存在本机。").font(.caption2).foregroundStyle(.secondary)
             } else { Text("本机 Gemma 完成照片分析。").font(.caption).foregroundStyle(.secondary) }
             ReferenceDestinationNotice(controller:studio.references)
+            Picker("拍摄风格",selection:$studio.photographyStyle) {
+                ForEach(PhotographyStyle.allCases,id:\.self) { Text($0.title).tag($0) }
+            }.pickerStyle(.segmented).disabled(studio.busy)
+                .onChange(of:studio.photographyStyle) { _,_ in studio.savePhotographyStyle() }
+            Text("风格用于下一轮推荐；每个方案会说明摄影依据、操作顺序与适用条件。").font(.caption2).foregroundStyle(.secondary)
             if studio.photoSource == .demo { Text("当前是演示画面，不是真实拍摄。").font(.caption).foregroundStyle(.orange) }
             if !studio.recommendationBatches.isEmpty {
                 HStack {
@@ -191,6 +196,22 @@ struct PhotoEditor: View {
                         ShotTemplatePreview(plan:plan,outline:studio.selectedOutline)
                         Text(plan.instruction).font(.subheadline)
                         Text(plan.reason).font(.caption).foregroundStyle(.secondary)
+                        if let design = plan.design {
+                            VStack(alignment:.leading,spacing:6) {
+                                ForEach(Array(design.steps.enumerated()),id:\.offset) { index, step in Text("\(index+1). \(step)").font(.caption) }
+                            }
+                            DisclosureGroup("摄影依据与适用条件") {
+                                VStack(alignment:.leading,spacing:8) {
+                                    ForEach(design.warnings,id:\.self) { Text($0).font(.caption).foregroundStyle(.secondary) }
+                                    if let card = PhotographyKnowledge.card(design.techniqueID) {
+                                        ForEach(card.sources,id:\.url) { source in
+                                            if let url = URL(string:source.url) { Link(source.title,destination:url).font(.caption) }
+                                        }
+                                    }
+                                    Text("知识规则 \(design.knowledgeVersion) · \(design.style.title) · 不是审美评分").font(.caption2).foregroundStyle(.secondary)
+                                }.padding(.top,8)
+                            }.font(.caption)
+                        }
                         if let project=studio.currentProject,let photo=project.activePhoto,let batch=photo.selectedBatch {
                             ReferenceCard(controller:studio.references,request:ReferenceImageRequest(projectID:project.id,photoID:photo.id,batchID:batch.id,plan:plan)) { retry in studio.generateReference(plan,retry:retry) }
                         }
@@ -246,13 +267,13 @@ struct PhotoEditor: View {
                     SubjectOutlineView(outline: outline)
                 }.aspectRatio(CGFloat(image.width)/CGFloat(image.height), contentMode: .fit)
                     .frame(maxHeight: 260).clipShape(RoundedRectangle(cornerRadius: 12))
-                Text("当前照片 · 实际分割轮廓").font(.caption).foregroundStyle(Color.melodyLime)
+                Text("当前照片 · 实际分割轮廓；主体选择用于下一轮推荐").font(.caption).foregroundStyle(Color.melodyLime)
                 if studio.subjectOutlines.count > 1 {
                     ScrollView(.horizontal) {
                         HStack {
                             ForEach(Array(studio.subjectOutlines.enumerated()), id: \.element.id) { index, candidate in
                                 Button("主体 \(index + 1)") { studio.chooseOutline(candidate.id) }
-                                    .buttonStyle(.bordered).tint(studio.selectedOutlineID == candidate.id ? Color.melodyLime : .gray)
+                                    .buttonStyle(.bordered).tint(studio.selectedOutlineID == candidate.id ? Color.melodyLime : .gray).disabled(studio.busy)
                             }
                         }
                     }

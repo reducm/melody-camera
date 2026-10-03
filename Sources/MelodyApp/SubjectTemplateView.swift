@@ -28,7 +28,8 @@ struct ShotTemplatePreview: View {
             ZStack {
                 Color.melodyBackground
                 CompositionOverlay(subject: plan.subject, grid: true, opacity: 0.7, showPerson: false)
-                if let outline { SubjectOutlineView(outline: outline, target: plan.subject) }
+                if let displayed = plan.design?.outline ?? (plan.design == nil ? outline : nil) { SubjectOutlineView(outline: displayed, target: plan.subject) }
+                if let horizon = plan.design?.horizonY { HorizonGuide(y:horizon) }
             }.aspectRatio(0.75, contentMode: .fit).frame(width: 132).clipShape(RoundedRectangle(cornerRadius: 12))
             VStack(alignment: .leading, spacing: 10) {
                 if let viewpoint = plan.viewpoint {
@@ -38,10 +39,20 @@ struct ShotTemplatePreview: View {
                     Text("机位示意 · 圆点为主体").font(.caption2).foregroundStyle(.secondary)
                 }
                 Text("主体位置与留白").font(.caption)
-                Text(outline == nil ? "未提取到轮廓，只显示目标范围。" : "描边来自当前照片，保持原比例。机位变化按文字执行，未生成新视角照片。")
+                Text(plan.design?.kind.title ?? (outline == nil ? "未提取到轮廓，只显示目标范围。" : "描边来自原照片，保持原比例；新机位按文字执行。"))
                     .font(.caption2).foregroundStyle(.secondary)
             }
         }
+    }
+}
+
+struct HorizonGuide: View {
+    let y: Double
+    var body: some View {
+        Canvas { context, size in
+            var path = Path(); path.move(to:.init(x:0,y:size.height*y)); path.addLine(to:.init(x:size.width,y:size.height*y))
+            context.stroke(path,with:.color(.orange.opacity(0.8)),style:StrokeStyle(lineWidth:1.5,dash:[5,4]))
+        }.allowsHitTesting(false).accessibilityLabel("目标地平线，保持水平")
     }
 }
 

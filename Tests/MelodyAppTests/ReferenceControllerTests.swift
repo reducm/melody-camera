@@ -2,6 +2,8 @@ import Foundation
 import Testing
 @testable import MelodyApp
 import MelodyCore
+import MelodyImaging
+import CoreGraphics
 
 private actor DelayedReferenceProvider: ReferenceImageGenerating {
     var calls=0
@@ -106,4 +108,63 @@ private struct ImmediateReferenceProvider:ReferenceImageGenerating {
     #expect(PhoneReferenceProvider.installationFraction(fileSizes:files) < 1)
     files[tensor]=nil
     #expect(PhoneReferenceProvider.installationFraction(fileSizes:files) < 1)
+}
+
+private func referenceReviewFixture() throws -> (Data, ShotPlan, SubjectOutline) {
+    let context = try #require(CGContext(data:nil,width:80,height:80,bitsPerComponent:8,bytesPerRow:320,space:CGColorSpaceCreateDeviceRGB(),bitmapInfo:CGImageAlphaInfo.noneSkipLast.rawValue))
+    context.setFillColor(CGColor(gray:0.5,alpha:1)); context.fill(CGRect(x:0,y:0,width:80,height:80))
+    let data = try PhotoProcessor.jpeg(#require(context.makeImage()))
+    let plan = ShotPlan(id:"knowledge-center",title:"测试取景",instruction:"保持主体完整",reason:"固定测试，不是模型输出",zoom:1,
+        subject:.init(x:0.2,y:0.2,width:0.6,height:0.6),design:.init(techniqueID:"center",style:.product,kind:.framingOnly,outline:nil,steps:["核对主体"],warnings:[]))
+    let outline = try SubjectOutline(id:1,paths:[[.init(x:0.3,y:0.2),.init(x:0.7,y:0.2),.init(x:0.7,y:0.8),.init(x:0.3,y:0.8)]],sourceAspect:1)
+    return (data,plan,outline)
+}
+
+@MainActor @Test func generatedContoursStayUnselectedUntilReviewedAndPersistWithJob() async throws {
+    let (data,plan,outline) = try referenceReviewFixture()
+    let root = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
+    defer { try? FileManager.default.removeItem(at:root) }
+    let controller = ReferenceGenerationController(root:root,loadSettings:false,provider:ImmediateReferenceProvider(result:data),outlineExtractor:{ _ in [outline] })
+    controller.enabled = true
+    let request = ReferenceImageRequest(projectID:UUID(),photoID:UUID(),batchID:UUID(),plan:plan)
+    controller.enqueue(request,jpeg:data)
+    for _ in 0..<100 where controller.jobs.first?.isActive == true { try await Task.sleep(for:.milliseconds(10)) }
+    #expect(controller.jobs.first?.state == .ready)
+    #expect(controller.jobs.first?.design?.candidates.count == 1)
+    #expect(controller.jobs.first?.design?.approvedOutline == nil)
+    #expect(throws:(any Error).self) { try controller.approveDesign(jobID:request.id,candidateID:1,checks:.init(identity:true,composition:false,executable:true)) }
+    try controller.approveDesign(jobID:request.id,candidateID:1,checks:.init(identity:true,composition:true,executable:true))
+    let restored = ReferenceGenerationController(root:root,loadSettings:false)
+    #expect(restored.jobs.first?.design?.approvedOutline == controller.jobs.first?.design?.approvedOutline)
+    restored.revokeDesign(request.id)
+    #expect(restored.jobs.first?.design?.approvedOutline == nil)
+}
+
+@MainActor @Test func retryCannotApproveOlderReadyReference() async throws {
+    let (data,plan,outline) = try referenceReviewFixture()
+    let controller = ReferenceGenerationController(loadSettings:false,provider:ImmediateReferenceProvider(result:data),outlineExtractor:{ _ in [outline] })
+    controller.enabled = true
+    let request = ReferenceImageRequest(projectID:UUID(),photoID:UUID(),batchID:UUID(),plan:plan)
+    controller.enqueue(request,jpeg:data)
+    for _ in 0..<100 where controller.jobs.first?.isActive == true { try await Task.sleep(for:.milliseconds(10)) }
+    #expect(controller.jobs.first?.state == .ready)
+    #expect(controller.imageData(request.id) != nil)
+    #expect(controller.jobs.first?.design?.candidates.count == 1)
+    let next = ReferenceImageRequest(projectID:request.projectID,photoID:request.photoID,batchID:request.batchID,plan:plan)
+    controller.enqueue(next,jpeg:data,retry:true)
+    #expect(throws:(any Error).self) { try controller.approveDesign(jobID:request.id,candidateID:1,checks:.init(identity:true,composition:true,executable:true)) }
+    controller.suspend()
+}
+
+@MainActor @Test func segmentationFailureKeepsGeneratedImageAndOriginalTemplate() async throws {
+    let (data,plan,_) = try referenceReviewFixture()
+    let controller = ReferenceGenerationController(loadSettings:false,provider:ImmediateReferenceProvider(result:data),outlineExtractor:{ _ in throw SegmentationFailure.noSubject })
+    controller.enabled = true
+    let request = ReferenceImageRequest(projectID:UUID(),photoID:UUID(),batchID:UUID(),plan:plan)
+    controller.enqueue(request,jpeg:data)
+    for _ in 0..<100 where controller.jobs.first?.isActive == true { try await Task.sleep(for:.milliseconds(10)) }
+    #expect(controller.jobs.first?.state == .ready)
+    #expect(controller.imageData(request.id) != nil)
+    #expect(controller.jobs.first?.design == nil)
+    #expect(controller.jobs.first?.request.plan == plan)
 }

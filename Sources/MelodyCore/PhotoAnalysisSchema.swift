@@ -13,8 +13,18 @@ public enum PhotoAnalysisSchema {
         let plan = object(["id":text(64), "title":text(24), "instruction":text(160), "reason":text(160),
             "zoom":["type":"number", "enum":availableZooms], "subject":box,
             "viewpoint":["type":"string", "enum":CameraViewpoint.allCases.map(\.rawValue)]])
+        func choice(_ values: [String]) -> [String:Any] { ["type":"string","enum":values] }
+        let scene = object([
+            "subjectKind":choice(SubjectKind.allCases.map(\.rawValue)), "shape":choice(SubjectShape.allCases.map(\.rawValue)),
+            "subjectCount":["type":"integer","minimum":0,"maximum":20], "facing":choice(FacingDirection.allCases.map(\.rawValue)),
+            "background":choice(SceneBackground.allCases.map(\.rawValue)), "lighting":choice(SceneLighting.allCases.map(\.rawValue)),
+            "viewpoint":choice(ObservedViewpoint.allCases.map(\.rawValue)), "hasTable":["type":"boolean"],
+            "horizonY":["type":"number","minimum":-1,"maximum":1],
+            "distractions":["type":"array","maxItems":8,"items":box]
+        ])
         return object(["subjectName":text(64), "detectedSubject":box, "summary":text(400),
+            "scene":scene,
             "observations":object(["light":text(400), "composition":text(400), "background":text(400), "pose":text(400), "quality":text(400)]),
-            "nextStep":text(400), "limitations":text(400), "plans":["type":"array", "minItems":1, "maxItems":3, "items":plan]])
+            "nextStep":text(400), "limitations":text(400), "plans":["type":"array", "minItems":1, "maxItems":1, "items":plan]])
     }
 }

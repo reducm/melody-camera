@@ -39,8 +39,14 @@ public struct ReferenceImageRequest: Codable, Equatable, Identifiable, Sendable 
         摄影理由：\(plan.reason)
         机位：\(plan.viewpoint?.title ?? "按具体动作调整")
         主体在画面的目标范围（左上原点，0至1）：x=\(plan.subject.x), y=\(plan.subject.y), width=\(plan.subject.width), height=\(plan.subject.height)。不在成图写这些数值。
+        \(designPrompt)
         这是低分辨率的视觉参考草稿，不是真实拍摄或三维重建。
         """
+    }
+    private var designPrompt: String {
+        guard let design = plan.design else { return "" }
+        let card = PhotographyKnowledge.card(design.techniqueID)
+        return "风格：\(design.style.title)。摄影依据：\(card?.principle ?? plan.reason)。前提：\(card?.caution ?? "核对现场条件")。\n构图参数属于竖向3:4取景。若输出画幅不同，将完整构图放在成图正中央的3:4区域内，裁到该区域后主体必须完整且符合目标范围。不要改变人物身份和姿态，不新增未见的光源或道具。\n轮廓来源：\(design.kind.title)。类别几何仅表达体块，细节沿用输入照片，不照着粗体块改变真实物体形状。"
     }
 }
 public enum ReferenceState: String, Codable, Sendable { case queued, running, ready, failed, cancelled }
@@ -64,6 +70,7 @@ public struct ReferenceJob: Codable, Identifiable, Sendable {
     public var state: ReferenceState
     public var progress: Double?
     public var message: String
+    public var design: ReferenceDesign?
     public init(request:ReferenceImageRequest,provider:String) {
         self.request=request; self.provider=provider; createdAt=Date(); state = .queued; message="等待生成参考图"; progress=nil
     }

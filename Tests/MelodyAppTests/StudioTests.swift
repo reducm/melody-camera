@@ -204,7 +204,9 @@ private actor ReadyCamera: CameraOperating {
     studio.baseURL = "https://example.com/v1"; studio.modelName = "fixture"; studio.apiKey = "test"
     studio.analyzePhoto()
     for _ in 0..<100 where studio.busy { try await Task.sleep(for: .milliseconds(10)) }
-    #expect(studio.photoAnalysis?.plans.count == 3)
+    // 旧供应商响应没有 scene，不把三个泛化建议冒充知识推荐。
+    #expect(studio.photoAnalysis?.plans.count == 1)
+    #expect(studio.photoAnalysis?.plans.first?.design?.kind == .framingOnly)
     #expect(studio.photoAnalysisSource.contains("非实拍"))
     #expect(studio.originalData == original)
     studio.capture()

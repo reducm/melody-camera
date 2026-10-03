@@ -24,8 +24,9 @@ public struct ShotPlan: Codable, Equatable, Identifiable, Sendable {
     public let zoom: Double
     public let subject: SubjectBox
     public let viewpoint: CameraViewpoint?
-    public init(id: String, title: String, instruction: String, reason: String, zoom: Double, subject: SubjectBox, viewpoint: CameraViewpoint? = nil) {
-        self.id = id; self.title = title; self.instruction = instruction; self.reason = reason; self.zoom = zoom; self.subject = subject; self.viewpoint = viewpoint
+    public var design: CompositionDesign?
+    public init(id: String, title: String, instruction: String, reason: String, zoom: Double, subject: SubjectBox, viewpoint: CameraViewpoint? = nil, design: CompositionDesign? = nil) {
+        self.id = id; self.title = title; self.instruction = instruction; self.reason = reason; self.zoom = zoom; self.subject = subject; self.viewpoint = viewpoint; self.design = design
     }
 }
 public enum CompositionError: Error, LocalizedError, Equatable {
@@ -61,6 +62,14 @@ public struct PlanCodec {
                   p.subject.isValid && p.zoom.isFinite && p.zoom > 0 &&
                   availableZooms.contains(where: { abs($0 - p.zoom) < 0.001 })
               }) else { throw CompositionError.invalidPlan }
+        for plan in plans {
+            try plan.design?.validate()
+            if let outline = plan.design?.outline {
+                let b = outline.bounds, s = plan.subject
+                guard abs(b.x-s.x) < 0.001, abs(b.y-s.y) < 0.001,
+                      abs(b.width-s.width) < 0.001, abs(b.height-s.height) < 0.001 else { throw CompositionError.invalidPlan }
+            }
+        }
         return plans
     }
 }

@@ -14,7 +14,10 @@ public struct CaptureReference: Codable, Equatable, Sendable {
     public let batchID: UUID
     public let outline: SubjectOutline?
     public let planID: String
-    public init(photoID: UUID, batchID: UUID, planID: String, outline: SubjectOutline? = nil) { self.outline = outline; self.photoID = photoID; self.batchID = batchID; self.planID = planID }
+    public let planSnapshot: ShotPlan?
+    public init(photoID: UUID, batchID: UUID, planID: String, outline: SubjectOutline? = nil, planSnapshot: ShotPlan? = nil) {
+        self.outline = outline; self.photoID = photoID; self.batchID = batchID; self.planID = planID; self.planSnapshot = planSnapshot
+    }
 }
 public struct ProjectPhoto: Codable, Identifiable, Equatable, Sendable {
     public let id: UUID
@@ -79,6 +82,7 @@ public struct ShootingProject: Codable, Identifiable, Equatable, Sendable {
     }
     public func followedPlan(for photo: ProjectPhoto) -> ShotPlan? {
         guard let ref = photo.capturedFollowing else { return nil }
+        if let snapshot = ref.planSnapshot, snapshot.id == ref.planID { return snapshot }
         return photos.first { $0.id == ref.photoID }?.recommendations.first { $0.id == ref.batchID }?.report.plans.first { $0.id == ref.planID }
     }
     public func validated() throws -> Self {
@@ -89,6 +93,13 @@ public struct ShootingProject: Codable, Identifiable, Equatable, Sendable {
                   !photo.availableZooms.isEmpty, photo.availableZooms.allSatisfy({ $0.isFinite && $0 > 0 }),
                   photo.editAmount.isFinite, (0...1).contains(photo.editAmount),
                   Set(photo.recommendations.map(\.id)).count == photo.recommendations.count else { throw ProjectFailure.damaged }
+            if let reference = photo.capturedFollowing, let snapshot = reference.planSnapshot {
+                guard snapshot.id == reference.planID,
+                      photos.first(where: { $0.id == reference.photoID })?.recommendations.first(where: { $0.id == reference.batchID })?.report.plans.contains(where: { $0.id == reference.planID }) == true else { throw ProjectFailure.damaged }
+                let envelope = try JSONSerialization.data(withJSONObject:["plans":JSONSerialization.jsonObject(with:JSONEncoder().encode([snapshot]))])
+                _ = try PlanCodec.decode(String(decoding:envelope,as:UTF8.self), availableZooms:photo.availableZooms)
+                if let designed = snapshot.design?.outline, designed != reference.outline { throw ProjectFailure.damaged }
+            }
             for batch in photo.recommendations {
                 let data = try JSONEncoder().encode(batch.report)
                 _ = try PhotoAnalysisCodec.decode(String(decoding:data,as:UTF8.self), availableZooms:photo.availableZooms)

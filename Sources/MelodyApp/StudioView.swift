@@ -136,6 +136,7 @@ struct StudioView: View {
             #endif
             CompositionOverlay(subject:studio.selected?.subject,grid:studio.grid,opacity:studio.guideOpacity,showPerson:false)
             if let outline = studio.guideOutline, let plan = studio.selected { SubjectOutlineView(outline:outline,target:plan.subject,opacity:studio.guideOpacity) }
+            if let horizon = studio.selected?.design?.horizonY { HorizonGuide(y:horizon) }
             VStack {
                 HStack {
                     Text(studio.selected == nil ? previewLabel : "模板跟拍 · 目标描边").font(.caption2).padding(9).background(.black.opacity(0.45),in:Capsule())
