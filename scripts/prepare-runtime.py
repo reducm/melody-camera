@@ -3,6 +3,7 @@
 import argparse
 import json
 from pathlib import Path
+import stat
 import subprocess
 
 REVISION = 'b5e9fb925ca5394b747e0e98a8c293bbab5091ca'
@@ -27,7 +28,13 @@ def apply_patch(checkout):
     current = target.read_bytes()
     if current not in (original, REPLACEMENT):
         raise ValueError('上游资源已有其他改动，拒绝覆盖')
-    target.write_bytes(REPLACEMENT)
+    # SwiftPM checkout 默认只读；只在写入已核对的文件时临时启用用户写权限。
+    mode = target.stat().st_mode
+    try:
+        target.chmod(mode | stat.S_IWUSR)
+        target.write_bytes(REPLACEMENT)
+    finally:
+        target.chmod(mode)
     print(json.dumps({'runtime_patch': PATCH_ID, 'revision': REVISION}, ensure_ascii=False))
 
 

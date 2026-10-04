@@ -11,8 +11,11 @@ import zipfile
 
 
 def digest(path):
+    hasher = hashlib.sha256()
     with path.open('rb') as stream:
-        return hashlib.file_digest(stream, 'sha256').hexdigest()
+        while block := stream.read(1024 * 1024):
+            hasher.update(block)
+    return hasher.hexdigest()
 
 
 def validate_assets(output, expected_commit, version):

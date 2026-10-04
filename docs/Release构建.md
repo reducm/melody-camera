@@ -28,7 +28,7 @@ iPhone IPA 在本流程中关闭代码签名，没有开发者证书或 provisio
 
 ## 本机构建
 
-需要 Apple Silicon、完整 Xcode 26.6、iOS SDK 26.5、Git LFS、Python 3.11+；这是当前验证组合，未承诺其他 Xcode 版本均可用。先从仓库干净检出，再执行：
+需要 Apple Silicon、完整 Xcode 26.6、iOS SDK 26.5、Git LFS、Python 3.9+；这是当前验证组合，未承诺其他 Xcode 版本均可用。先从仓库干净检出，再执行：
 
 ```sh
 swift test

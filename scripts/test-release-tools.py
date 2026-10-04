@@ -101,10 +101,12 @@ class RuntimePatchChecks(unittest.TestCase):
             target = checkout / package.runtime.RESOURCE
             target.parent.mkdir(parents=True)
             target.write_bytes(b'upstream fixture')
+            target.chmod(0o444)
             with patch.object(package.runtime.subprocess, 'check_output', side_effect=[package.runtime.REVISION, b'upstream fixture'] * 2):
                 package.runtime.apply_patch(checkout)
                 self.assertEqual(target.read_bytes(), package.runtime.REPLACEMENT)
                 package.runtime.apply_patch(checkout)
+                self.assertEqual(target.stat().st_mode & 0o777, 0o444)
 
     def test_changed_revision_rejected(self):
         with patch.object(package.runtime.subprocess, 'check_output', return_value='new-revision'):

@@ -145,7 +145,10 @@ def main():
             subprocess.run(['ditto', '-c', '-k', '--norsrc', '--keepParent',
                             str(copied_app / 'Legal'), str(output / 'ThirdPartyNotices.zip')], check=True)
     with archive.open('rb') as stream:
-        digest = hashlib.file_digest(stream, 'sha256').hexdigest()
+        hasher = hashlib.sha256()
+        while block := stream.read(1024 * 1024):
+            hasher.update(block)
+        digest = hasher.hexdigest()
     metadata = {
         'file': archive.name, 'sha256': digest, 'bytes': archive.stat().st_size,
         'commit': command('git', '-C', str(ROOT), 'rev-parse', 'HEAD'),
