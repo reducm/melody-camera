@@ -1,15 +1,20 @@
 #!/usr/bin/env python3
 """发布边界回归：防止不同提交、被替换的文件或错误平台包进入 Release。"""
 import importlib.util
+import io
 import json
 from pathlib import Path
 import tempfile
 import unittest
+from unittest.mock import patch
 import zipfile
 
 spec = importlib.util.spec_from_file_location('prepare_release', Path(__file__).with_name('prepare-release.py'))
 release = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(release)
+package_spec = importlib.util.spec_from_file_location('package_release', Path(__file__).with_name('package-release.py'))
+package = importlib.util.module_from_spec(package_spec)
+package_spec.loader.exec_module(package)
 
 
 class ReleaseChecks(unittest.TestCase):
@@ -31,6 +36,7 @@ class ReleaseChecks(unittest.TestCase):
                     'source_dirty': False, 'version': '0.1.0', 'build': '3',
                     'configuration': 'Release', 'architecture': 'arm64',
                     'models_included': False, 'api_key_included': False,
+                    'runtime_patches': ['drawthings-empty-unused-grpc-server-key-v1'],
                     'bytes': archive.stat().st_size, 'sha256': release.digest(archive)}
         (self.output / (name + '.json')).write_text(json.dumps(metadata))
 
@@ -73,6 +79,46 @@ class ReleaseChecks(unittest.TestCase):
     def test_model_metadata_rejected(self):
         self.change(models_included=True)
         with self.assertRaises(ValueError): self.check()
+
+
+class CredentialChecks(unittest.TestCase):
+    def test_tls_header_constant_is_not_a_private_key(self):
+        self.assertFalse(package.has_sensitive_content(io.BytesIO(b'-----BEGIN ' + b'PRIVATE KEY-----\0')))
+
+    def test_pem_with_encoded_body_is_rejected(self):
+        data = b'-----BEGIN ' + b'PRIVATE KEY-----\n' + b'A' * 64 + b'\n'
+        self.assertTrue(package.has_sensitive_content(io.BytesIO(data)))
+
+    def test_key_across_chunk_boundary_is_rejected(self):
+        data = b' ' * (1024 * 1024 - 12) + b'sk' + b'-' + b'a' * 32
+        self.assertTrue(package.has_sensitive_content(io.BytesIO(data)))
+
+
+class RuntimePatchChecks(unittest.TestCase):
+    def test_known_resource_is_replaced_and_repeatable(self):
+        with tempfile.TemporaryDirectory() as directory:
+            checkout = Path(directory)
+            target = checkout / package.runtime.RESOURCE
+            target.parent.mkdir(parents=True)
+            target.write_bytes(b'upstream fixture')
+            with patch.object(package.runtime.subprocess, 'check_output', side_effect=[package.runtime.REVISION, b'upstream fixture'] * 2):
+                package.runtime.apply_patch(checkout)
+                self.assertEqual(target.read_bytes(), package.runtime.REPLACEMENT)
+                package.runtime.apply_patch(checkout)
+
+    def test_changed_revision_rejected(self):
+        with patch.object(package.runtime.subprocess, 'check_output', return_value='new-revision'):
+            with self.assertRaises(ValueError): package.runtime.apply_patch(Path('/unused'))
+
+    def test_other_modification_not_overwritten(self):
+        with tempfile.TemporaryDirectory() as directory:
+            checkout = Path(directory)
+            target = checkout / package.runtime.RESOURCE
+            target.parent.mkdir(parents=True)
+            target.write_bytes(b'other work')
+            with patch.object(package.runtime.subprocess, 'check_output', side_effect=[package.runtime.REVISION, b'original']):
+                with self.assertRaises(ValueError): package.runtime.apply_patch(checkout)
+            self.assertEqual(target.read_bytes(), b'other work')
 
 
 if __name__ == '__main__':

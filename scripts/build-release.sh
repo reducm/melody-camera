@@ -13,10 +13,13 @@ derived="${MELODY_DERIVED_DATA:-$PWD/build/release-$sdk}"
 packages="${MELODY_PACKAGES_DIR:-$PWD/.build/xcode-packages}"
 output="${MELODY_RELEASE_OUTPUT:-$PWD/artifacts/release}"
 mkdir -p "$output"
+xcodebuild -resolvePackageDependencies -project MelodyCamera.xcodeproj -scheme MelodyCamera \
+  -clonedSourcePackagesDirPath "$packages" -onlyUsePackageVersionsFromResolvedFile
+python3 scripts/prepare-runtime.py --packages "$packages"
 xcodebuild -project MelodyCamera.xcodeproj -scheme MelodyCamera \
   -configuration Release -sdk "$sdk" -destination "$destination" \
   -derivedDataPath "$derived" -clonedSourcePackagesDirPath "$packages" \
-  -onlyUsePackageVersionsFromResolvedFile -jobs "${MELODY_BUILD_JOBS:-3}" \
+  -disableAutomaticPackageResolution -onlyUsePackageVersionsFromResolvedFile -jobs "${MELODY_BUILD_JOBS:-3}" \
   ARCHS=arm64 ONLY_ACTIVE_ARCH=YES CODE_SIGNING_ALLOWED=NO CODE_SIGNING_REQUIRED=NO \
   CODE_SIGN_IDENTITY= DEVELOPMENT_TEAM= PRODUCT_BUNDLE_IDENTIFIER=com.melody.camera build
 python3 scripts/package-release.py \

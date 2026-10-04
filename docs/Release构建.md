@@ -44,6 +44,8 @@ python3 scripts/prepare-release.py v0.1.0-preview.1
 
 `GIT_LFS_SKIP_SMUDGE=1` 避免 LiteRT-LM 源码检出时下载非 iOS 的预编译文件和测试权重；iOS 所需官方 XCFramework 仍由 SwiftPM 根据 Package.swift 的 URL 和 SHA-256 获取。这修复了首次 CI 因 Android LFS 缺失对象而失败的问题。
 
+依赖解析后，构建脚本运行 `prepare-runtime.py`，移除 Draw Things 固定版本中本产品未使用的公开 gRPC 服务器密钥资源，再执行编译。此补丁只支持已审阅 revision，完整实现与变更说明随源码分发；不会修改用户钥匙串。原始资源虽是上游公开默认值，仍不放进本次 Release，详见第三方声明。
+
 ## GitHub Actions
 
 - 普通 `main`/`codex/**` 推送和 PR 运行 `verify.yml`：Swift 测试、Mac 构建、无签名 arm64 iOS 模拟器 Debug 构建。

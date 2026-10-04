@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """核对 Release 应用、收集上游许可并生成 IPA/模拟器包；不读取钥匙串。"""
 import argparse
+import importlib.util
 import hashlib
 import json
 from pathlib import Path
@@ -12,10 +13,27 @@ import tempfile
 
 ROOT = Path(__file__).resolve().parent.parent
 LOCK = Path('MelodyCamera.xcodeproj/project.xcworkspace/xcshareddata/swiftpm/Package.resolved')
+runtime_spec = importlib.util.spec_from_file_location('prepare_runtime', ROOT / 'scripts/prepare-runtime.py')
+runtime = importlib.util.module_from_spec(runtime_spec)
+runtime_spec.loader.exec_module(runtime)
+SECRETS = re.compile(
+    rb'\bsk-[A-Za-z0-9_-]{20,}\b|'
+    rb'-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----[\r\n ]+[A-Za-z0-9+/=]{48,}'
+)
 
 
 def command(*args):
     return subprocess.check_output(args, text=True).strip()
+
+
+def has_sensitive_content(stream):
+    previous = b''
+    while block := stream.read(1024 * 1024):
+        data = previous + block
+        if SECRETS.search(data):
+            return True
+        previous = data[-512:]
+    return False
 
 
 def check_app(app, sdk):
@@ -31,7 +49,6 @@ def check_app(app, sdk):
         raise ValueError('产物必须是 arm64')
     forbidden = {'.mobileprovision', '.p12', '.pfx', '.key', '.pem', '.p8',
                  '.litertlm', '.gguf', '.ckpt', '.safetensors', '.log'}
-    secrets = re.compile(rb'\bsk-[A-Za-z0-9_-]{20,}\b|-----BEGIN (?:RSA |EC |OPENSSH )?PRIVATE KEY-----')
     for item in app.rglob('*'):
         if item.is_symlink() and not item.resolve().is_relative_to(app):
             raise ValueError('应用包含指向包外的符号链接')
@@ -42,13 +59,10 @@ def check_app(app, sdk):
                                  'credentials.json', 'secrets.json'}):
             raise ValueError('应用包含不应分发的配置、签名、模型或日志文件')
         # 分块扫描并保留交界内容，避免将大型 SDK 整体读入内存。
+        # TLS 库可含 PEM 标题字符串常量；只有标题后存在编码正文才判定为私钥。
         with item.open('rb') as stream:
-            previous = b''
-            while block := stream.read(1024 * 1024):
-                data = previous + block
-                if secrets.search(data):
-                    raise ValueError('应用内容命中凭据格式；停止打包，不输出匹配正文')
-                previous = data[-256:]
+            if has_sensitive_content(stream):
+                raise ValueError('应用内容命中凭据格式；停止打包，不输出匹配正文')
     return info
 
 
@@ -62,6 +76,13 @@ def collect_licenses(packages, destination):
         checkout = checkouts[identity]
         if command('git', '-C', str(checkout), 'rev-parse', 'HEAD') != revision:
             raise ValueError(f'依赖版本与锁文件不符：{identity}')
+        modified = command('git', '-C', str(checkout), 'diff', '--name-only').splitlines()
+        if identity == 'draw-things-community':
+            if (revision != runtime.REVISION or modified != [runtime.RESOURCE]
+                    or (checkout / runtime.RESOURCE).read_bytes() != runtime.REPLACEMENT):
+                raise ValueError('Draw Things 必须只应用已审阅的服务器资源移除补丁')
+        elif modified:
+            raise ValueError(f'依赖有未记录改动：{identity}')
         paths = command('git', '-C', str(checkout), 'ls-files', '-z').split('\0')
         copied = []
         for name in paths:
@@ -80,7 +101,8 @@ def collect_licenses(packages, destination):
         url = pin['location'].removesuffix('.git')
         dependencies.append({'name': identity, 'revision': revision, 'repository': url,
                              'source_archive': f'{url}/archive/{revision}.tar.gz',
-                             'license_files': copied})
+                             'license_files': copied,
+                             'melody_patches': [runtime.PATCH_ID] if identity == 'draw-things-community' else []})
     destination.mkdir(parents=True, exist_ok=True)
     (destination / 'dependencies.json').write_text(json.dumps(dependencies, ensure_ascii=False, indent=2) + '\n')
     for name in ('LICENSE', 'THIRD_PARTY_NOTICES.md'):
@@ -133,6 +155,7 @@ def main():
         'xcode': command('xcodebuild', '-version'),
         'source_dirty': bool(command('git', '-C', str(ROOT), 'status', '--porcelain')),
         'models_included': False, 'api_key_included': False,
+        'runtime_patches': [runtime.PATCH_ID],
     }
     (output / (stem + '.json')).write_text(json.dumps(metadata, ensure_ascii=False, indent=2) + '\n')
     print(json.dumps(metadata, ensure_ascii=False, indent=2))

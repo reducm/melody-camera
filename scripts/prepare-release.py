@@ -32,6 +32,8 @@ def validate_assets(output, expected_commit, version):
             raise ValueError('构建来源、版本、配置或架构不一致')
         if data['models_included'] or data['api_key_included']:
             raise ValueError('不允许分发内含模型或 Key 的产物')
+        if data.get('runtime_patches') != ['drawthings-empty-unused-grpc-server-key-v1']:
+            raise ValueError('缺少已审阅的运行时资源移除记录')
         if archive.stat().st_size != data['bytes'] or digest(archive) != data['sha256']:
             raise ValueError('产物大小或 SHA-256 不匹配')
         platforms.add(data['sdk'])
