@@ -1,0 +1,108 @@
+name: 构建 GitHub Release
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: '预发布标签，例如 v0.1.0-preview.1'
+        required: true
+        default: v0.1.0-preview.1
+        type: string
+      draft:
+        description: '先保存为 Release 草稿'
+        default: true
+        type: boolean
+permissions:
+  contents: read
+concurrency:
+  group: release-${{ inputs.tag }}
+  cancel-in-progress: false
+env:
+  DEVELOPER_DIR: /Applications/Xcode_26.6.app/Contents/Developer
+  GIT_LFS_SKIP_SMUDGE: '1'
+jobs:
+  verify:
+    runs-on: macos-26
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: 校验预发布标签并测试
+        env:
+          RELEASE_TAG: ${{ inputs.tag }}
+          RELEASE_DRAFT: ${{ inputs.draft }}
+        run: |
+          python3 - <<'PY'
+          import os, re
+          from pathlib import Path
+          tag = os.environ['RELEASE_TAG']
+          version = re.search(r'MARKETING_VERSION: ([0-9.]+)', Path('project.yml').read_text())[1]
+          if not re.fullmatch(r'v' + re.escape(version) + r'-(preview|alpha|beta|rc)\.[1-9][0-9]*', tag):
+              raise SystemExit('标签必须与 App 版本一致并带预发布编号')
+          if os.environ['RELEASE_DRAFT'] == 'false' and not Path('LICENSE').is_file():
+              raise SystemExit('公开分发前需要确定项目许可证')
+          PY
+          test "$(uname -m)" = arm64
+          xcodebuild -version
+          python3 scripts/test-release-tools.py
+          swift test
+          swift build
+  build:
+    needs: verify
+    runs-on: macos-26
+    timeout-minutes: 90
+    strategy:
+      fail-fast: false
+      matrix:
+        sdk: [iphoneos, iphonesimulator]
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/cache@v4
+        with:
+          path: .build/xcode-packages
+          key: spm-${{ runner.os }}-${{ runner.arch }}-xcode26.6-${{ hashFiles('**/Package.resolved') }}
+      - name: 构建、核对和打包
+        env:
+          RELEASE_SDK: ${{ matrix.sdk }}
+        run: bash scripts/build-release.sh "$RELEASE_SDK"
+      - uses: actions/upload-artifact@v4
+        with:
+          name: release-${{ matrix.sdk }}
+          path: artifacts/release/*
+          if-no-files-found: error
+          retention-days: 7
+          compression-level: 0
+  publish:
+    needs: build
+    runs-on: ubuntu-24.04
+    timeout-minutes: 15
+    permissions:
+      contents: write
+    env:
+      GH_TOKEN: ${{ github.token }}
+      RELEASE_TAG: ${{ inputs.tag }}
+      RELEASE_DRAFT: ${{ inputs.draft }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: release-*
+          path: artifacts/release
+          merge-multiple: true
+      - name: 校验产物并创建预发布
+        run: |
+          python3 scripts/prepare-release.py "$RELEASE_TAG"
+          if gh release view "$RELEASE_TAG" >/dev/null 2>&1; then
+            echo '该 Release 已存在；不覆盖现有产物，请使用新的预发布编号。' >&2
+            exit 1
+          fi
+          flags=()
+          if [ "$RELEASE_DRAFT" = true ]; then flags+=(--draft); fi
+          gh release create "$RELEASE_TAG" artifacts/release/* \
+            --target "$GITHUB_SHA" --title "Melody 相机 $RELEASE_TAG" \
+            --prerelease --latest=false "${flags[@]}" \
+            --notes-file artifacts/release-notes.md

@@ -19,11 +19,13 @@ settings:
     "EXCLUDED_ARCHS[sdk=iphonesimulator*]": x86_64
     CURRENT_PROJECT_VERSION: 3
     MARKETING_VERSION: 0.1.0
-    DEVELOPMENT_TEAM: ""
 targets:
   MelodyCamera:
     type: application
     platform: iOS
+    configFiles:
+      Debug: Config/Build.xcconfig
+      Release: Config/Build.xcconfig
     sources:
       - Sources/MelodyApp
       - ios/Assets.xcassets
@@ -39,11 +41,9 @@ targets:
     settings:
       base:
         ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
-        PRODUCT_BUNDLE_IDENTIFIER: com.melody.camera
         TARGETED_DEVICE_FAMILY: "1"
         SUPPORTS_MACCATALYST: NO
         CODE_SIGN_STYLE: Automatic
-        DEVELOPMENT_TEAM: 35PMA35HQU
     info:
       path: ios/Info.plist
       properties:

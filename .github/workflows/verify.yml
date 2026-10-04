@@ -30,7 +30,9 @@ jobs:
           path: .build/xcode-packages
           key: spm-${{ runner.os }}-${{ runner.arch }}-xcode26.6-${{ hashFiles('**/Package.resolved') }}
       - name: 运行领域、图像及应用流程测试
-        run: swift test
+        run: |
+          python3 scripts/test-release-tools.py
+          swift test
       - name: 构建 Mac 版
         run: swift build
       - name: 无签名构建 iOS 模拟器版本

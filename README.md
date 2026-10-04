@@ -65,6 +65,10 @@ cd melody-camera
 
 当前工程最低部署目标为 **iOS 17 / macOS 14**；最低部署版本不等于所有设备都能运行大型本地模型。最近验证环境为 Apple Silicon、macOS 26.2、Swift 6.3.3、Xcode 26.6、iOS SDK / Simulator 26.5，真机为 iPhone 17 Pro Max / iOS 26.6.2，详见 [开发环境](docs/开发环境.md) 和 [验证记录](docs/验证记录.md)。
 
+### 预发布下载
+
+[GitHub Releases](https://github.com/reducm/melody-camera/releases) 提供开发预览：iPhone arm64 未签名 IPA（需自行签名后安装）、Apple Silicon iOS 模拟器包、源码与 SHA-256 校验文件。两种应用包均不含模型权重或 API Key；打包与安装方法见 [Release 构建说明](docs/Release构建.md)。
+
 ### iPhone 与模拟器
 
 在已安装完整 Xcode、对应平台组件和 Git LFS 的 Mac 上：
@@ -76,7 +80,7 @@ GIT_LFS_SKIP_SMUDGE=1 xcodebuild -resolvePackageDependencies \
 ./scripts/run-ios.sh
 ```
 
-脚本打开 Xcode 工程与模拟器；选择目标设备后运行。LiteRT-LM 当前依赖支持 arm64 模拟器。真机需要使用自己的 Apple 签名账号、Team 与 Bundle ID；目前共享工程仍有原开发者 Team 配置，公开分发前的本机覆盖配置拆分尚待完成。`project.yml` 是工程配置来源，安装了 XcodeGen 时启动脚本会重生成工程，不能只修改生成工程就认为配置会永久保留。
+脚本打开 Xcode 工程与模拟器；选择目标设备后运行。LiteRT-LM 当前依赖支持 arm64 模拟器。真机需要使用自己的 Apple 签名账号、Team 与 Bundle ID：将 `Config/Local.example.xcconfig` 复制为被 Git 忽略的 `Config/Local.xcconfig`，填写个人值。共享工程不含个人 Team；`project.yml` 是工程配置来源，XcodeGen 重生成仍会通过公共 `Build.xcconfig` 读取本机覆盖。Release 构建显式禁用个人签名。
 
 模拟器可以查看界面和验证流程；真实相机、镜头与手机模型运行须在 iPhone 验证。模型缺失时不会自动下载，也不会自动切换云服务。
 
@@ -149,4 +153,4 @@ scripts/            # 运行、环境检查、回归与密钥检查
 
 ## 第三方许可
 
-Draw Things 引擎与项目中适配自上游的代码涉及 [GPL-3.0](docs/licenses/DrawThings-GPL-3.0.txt)；模型权重与示例图片分别遵循各自许可。项目根许可证与完整第三方清单仍待确定，不能将整个项目视为已采用 MIT。来源与待办见 [发布检查](docs/GitHub发布检查.md)。
+项目采用 [GPL-3.0-only](LICENSE)，允许使用、修改与再分发；分发修改版时须遵守 GPL 的开源和许可保留要求。Draw Things、LiteRT-LM、传递依赖与素材保留各自许可，详见 [第三方声明](THIRD_PARTY_NOTICES.md)。Release 附带固定依赖的原始许可证、源码入口与本项目源码；模型权重不随包分发。

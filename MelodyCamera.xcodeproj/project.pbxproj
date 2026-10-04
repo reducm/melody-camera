@@ -42,6 +42,7 @@
 		0A4CD467FB5B3DDFCC4B6D7E /* ReferenceImageClient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReferenceImageClient.swift; sourceTree = "<group>"; };
 		0CF9852F9554F7F5ABCF4373 /* DiagnosticLogView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagnosticLogView.swift; sourceTree = "<group>"; };
 		125FEF1AE132DAF990F4A633 /* StudioView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StudioView.swift; sourceTree = "<group>"; };
+		22D92FE11B614A81A66BEDA0 /* Build.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Build.xcconfig; sourceTree = "<group>"; };
 		3EF617C1886FDBADA6B6C964 /* ModelDiagnostics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelDiagnostics.swift; sourceTree = "<group>"; };
 		527CDDA7E53731C497409336 /* PhoneReferenceProvider.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhoneReferenceProvider.swift; sourceTree = "<group>"; };
 		57F6C50736D0D66BD3AC27B8 /* MelodyCamera.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = MelodyCamera.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -118,11 +119,20 @@
 		821B8614A27995C8077B2FCD = {
 			isa = PBXGroup;
 			children = (
+				A3E89991AEB86644C0B45991 /* Config */,
 				D8F7EFCE8499AA8DAC1CFB34 /* ios */,
 				6B7EB51243A7C63526B28DDB /* MelodyApp */,
 				C177D34DB634891EEE39C450 /* Packages */,
 				E3DDA1B2CA4CCA035EB0C60F /* Products */,
 			);
+			sourceTree = "<group>";
+		};
+		A3E89991AEB86644C0B45991 /* Config */ = {
+			isa = PBXGroup;
+			children = (
+				22D92FE11B614A81A66BEDA0 /* Build.xcconfig */,
+			);
+			path = Config;
 			sourceTree = "<group>";
 		};
 		C177D34DB634891EEE39C450 /* Packages */ = {
@@ -185,7 +195,7 @@
 				LastUpgradeCheck = 1430;
 				TargetAttributes = {
 					D31BA4375E5B2C870962BF41 = {
-						DevelopmentTeam = 35PMA35HQU;
+						DevelopmentTeam = "";
 						ProvisioningStyle = Automatic;
 					};
 				};
@@ -296,7 +306,6 @@
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 3;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = "";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = x86_64;
@@ -322,17 +331,16 @@
 		};
 		7759CEEF8E88A5B8A16B09D7 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 22D92FE11B614A81A66BEDA0 /* Build.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 35PMA35HQU;
 				INFOPLIST_FILE = ios/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.melody.camera;
 				SDKROOT = iphoneos;
 				SUPPORTS_MACCATALYST = NO;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -375,7 +383,6 @@
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 3;
 				DEBUG_INFORMATION_FORMAT = dwarf;
-				DEVELOPMENT_TEAM = "";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = x86_64;
@@ -408,17 +415,16 @@
 		};
 		F1542A8DDCACA4DF8E424997 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 22D92FE11B614A81A66BEDA0 /* Build.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = 35PMA35HQU;
 				INFOPLIST_FILE = ios/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.melody.camera;
 				SDKROOT = iphoneos;
 				SUPPORTS_MACCATALYST = NO;
 				TARGETED_DEVICE_FAMILY = 1;

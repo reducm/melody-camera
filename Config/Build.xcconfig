@@ -1,0 +1,4 @@
+// 公共默认值；私人签名只写入被 Git 忽略的 Local.xcconfig。
+PRODUCT_BUNDLE_IDENTIFIER = com.melody.camera
+DEVELOPMENT_TEAM =
+#include? "Local.xcconfig"

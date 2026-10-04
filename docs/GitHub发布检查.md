@@ -52,8 +52,8 @@ python3 scripts/check-secrets.py
 
 ## 仍待完成的发布准备
 
-- 个人 Team 仍在共享工程中；本机签名覆盖配置尚待拆分，`project.yml` 与生成工程需同步。
-- 根项目许可证与完整第三方声明尚待决定；Draw Things 引擎及适配代码涉及 GPL-3.0，模型/素材许可另行记录。
+- 个人签名配置已拆分至忽略的 `Config/Local.xcconfig`，`project.yml` 与生成工程已同步；换机需自行填写。
+- 项目已采用 GPL-3.0-only，根 LICENSE、第三方声明和依赖许可收集已加入；以后升级依赖仍须复核条款，模型/素材许可另行保留。
 - Gemma 已有固定下载与导入；Qwen 目前仍是开发容器安装，需要可复现安装工具，普通用户下载管理尚未实现。
 - 完成全新克隆依赖解析、Swift / iOS 构建与无 Key/无模型状态检查；首次 GitHub Actions 已触发，结果见 [Actions](https://github.com/reducm/melody-camera/actions)，runner/Xcode/arm64/LFS/缓存仍需按实际结果核对。
 

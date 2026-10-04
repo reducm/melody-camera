@@ -1,0 +1,4 @@
+// 复制为 Config/Local.xcconfig 后填写自己的 Team 与 Bundle ID。
+// 不要在此文件或任何构建设置中填写模型 API Key。
+DEVELOPMENT_TEAM =
+PRODUCT_BUNDLE_IDENTIFIER = com.example.melody.camera
