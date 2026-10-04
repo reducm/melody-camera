@@ -138,7 +138,7 @@ enum DirectorMode: String, CaseIterable { case offline = "离线构图", online 
             let image = try PhotoProcessor.load(data)
             cameraDriver.stop()
             imported = image; importedData = data; source = .imported; zooms = [1]; zoom = 1; resetPlans()
-            notice = "已导入照片，保留原始文件；在线分析前需要单独开启上传。"
+            notice = "已导入照片并保留原始文件；选择在线模型并点击生成推荐时才上传。"
         } catch { DiagnosticLog.shared.failure(error, .storage, "照片读取失败"); self.error = error.localizedDescription }
     }
     func startCamera(plan: ShotPlan? = nil) {

@@ -36,6 +36,14 @@ enum DebugProvisioning {
 /// 只有显式启动参数才执行的真机集成检查，不上传文件，也不访问相册。
 @MainActor extension StudioModel {
     func runDeviceGemmaCheck() async {
+        #if targetEnvironment(simulator)
+        if ProcessInfo.processInfo.arguments.contains("--melody-check-public-photos") {
+            let documents = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+            let report = await PublicPhotoRegression.run(fixtures: documents.appendingPathComponent("PublicPhotoFixtures"), output: documents.appendingPathComponent("PublicPhotoResults"))
+            notice = report.passed ? "公开照片流程检查通过；使用固定场景与快门替身，未验证模型或硬件。" : "公开照片流程检查未通过，详见本机测试结果。"
+            return
+        }
+        #endif
         if ProcessInfo.processInfo.arguments.contains("--melody-check-logs") {
             let root = FileManager.default.temporaryDirectory.appendingPathComponent(UUID().uuidString)
             defer { try? FileManager.default.removeItem(at: root) }

@@ -5,7 +5,8 @@ import MelodyImaging
 @testable import MelodyApp
 
 /// 显式环境变量才运行；仅使用仓库外公开样图，不扫描用户相册。
-@Test func realPublicImageSegmentation() throws {
+@Test(.enabled(if: ProcessInfo.processInfo.environment["MELODY_PUBLIC_FIXTURE"] != nil))
+func realPublicImageSegmentation() throws {
     guard let path = ProcessInfo.processInfo.environment["MELODY_PUBLIC_FIXTURE"] else { return }
     let image = try PhotoProcessor.load(Data(contentsOf: URL(fileURLWithPath: path)))
     let outlines = try SubjectSegmenter.outlines(in: image)
@@ -16,7 +17,8 @@ import MelodyImaging
         try JSONSerialization.data(withJSONObject: output).write(to: URL(fileURLWithPath: destination).appendingPathComponent("actual-outlines.json"))
     }
 }
-@Test func realDeepSeekPhotoContract() async throws {
+@Test(.enabled(if: ProcessInfo.processInfo.environment["MELODY_PUBLIC_FIXTURE"] != nil && ProcessInfo.processInfo.environment["MELODY_PRIVATE_CONFIG"] != nil))
+func realDeepSeekPhotoContract() async throws {
     guard let path = ProcessInfo.processInfo.environment["MELODY_PUBLIC_FIXTURE"],
           let configuration = ProcessInfo.processInfo.environment["MELODY_PRIVATE_CONFIG"] else { return }
     struct Input: Decodable { let baseURL: String; let model: String; let apiKey: String }

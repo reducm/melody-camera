@@ -102,10 +102,18 @@ public extension ShotPlan {
     func adopting(_ reference: ReferenceDesign) throws -> ShotPlan {
         try reference.validate(for:reference.jobID)
         guard let outline = reference.approvedOutline, let old = design else { throw CompositionError.invalidPlan }
+        let center = outline.bounds.x + outline.bounds.width / 2
+        let position = center < 0.44 ? "偏左" : (center > 0.56 ? "偏右" : "中央")
+        // 合成参考图可能改变主体位置与占比，旧方案的移动方向和距离提示不再适用。
+        let steps = [
+            "按已核对参考图的机位取景，先确认现场可以完成",
+            "使用 \(zoom.formatted())×，让主体中心落在画面\(position)的设计轮廓范围",
+            "重新对照轮廓大小和留白，缓慢调整距离并保留完整主体"
+        ]
         let replacement = CompositionDesign(techniqueID:old.techniqueID, style:old.style, kind:.generatedReference,
-            outline:outline, steps:old.steps, warnings:old.warnings + ["描边提取自合成参考图；用户核对不等于模型身份或角度验证。"],
+            outline:outline, steps:steps, warnings:old.warnings + ["描边提取自合成参考图；用户核对不等于模型身份或角度验证。"],
             horizonY:nil, referenceJobID:reference.jobID)
         try replacement.validate()
-        return ShotPlan(id:id, title:title, instruction:instruction, reason:reason, zoom:zoom, subject:outline.bounds, viewpoint:viewpoint, design:replacement)
+        return ShotPlan(id:id, title:title, instruction:steps.joined(separator:"；"), reason:reason, zoom:zoom, subject:outline.bounds, viewpoint:viewpoint, design:replacement)
     }
 }

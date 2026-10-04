@@ -156,3 +156,17 @@ func recommendationScenarioMatrixHonorsGeometryAndKnowledge(style:PhotographySty
     #expect(!result.plans.isEmpty)
     #expect(try JSONEncoder().encode(result).count <= 32_768)
 }
+
+@Test func adoptedReferenceGuidanceUsesNewTargetInsteadOfOldPlacement() throws {
+    var scene = SceneEvidence(); scene.subjectKind = .person; scene.facing = .right
+    let report = try RecommendationEngine.recommend(report:sampleReport(scene),context:.init(),outline:nil,availableZooms:[1],capturedZoom:1)
+    let old = try #require(report.plans.first { $0.design?.techniqueID == "gaze-space" })
+    #expect(old.instruction.contains("偏左"))
+    let right = try SubjectOutline(id:1,paths:[[.init(x:0.65,y:0.2),.init(x:0.85,y:0.2),.init(x:0.85,y:0.8),.init(x:0.65,y:0.8)]],sourceAspect:0.75)
+    var reference = try ReferenceDesign(jobID:UUID(),candidates:[right])
+    try reference.approve(candidateID:1,checks:.init(identity:true,composition:true,executable:true),expectedJobID:reference.jobID)
+    let adopted = try old.adopting(reference)
+    #expect(adopted.instruction.contains("偏右"))
+    #expect(!adopted.instruction.contains("偏左"))
+    #expect(adopted.design?.steps.contains { $0.contains("重新对照") } == true)
+}

@@ -13,6 +13,7 @@
 		26861A03CDCC8B7D7A019778 /* MelodyApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0BC697879F50842064809B8 /* MelodyApp.swift */; };
 		2704747AE59FF162EA4A6F17 /* NetworkTransport.swift in Sources */ = {isa = PBXBuildFile; fileRef = ECAE9F43952D425ABA73D4F4 /* NetworkTransport.swift */; };
 		279C4DD20E477A0FCCC6CD29 /* ReferenceViews.swift in Sources */ = {isa = PBXBuildFile; fileRef = D41F0112675119A59EB853BC /* ReferenceViews.swift */; };
+		27CF48878FF9A9C89D9E4130 /* PublicPhotoRegression.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DC7DD229213D96A50FF55F4 /* PublicPhotoRegression.swift */; };
 		27EA75C5CBF27414925BF50F /* DiagnosticLog.swift in Sources */ = {isa = PBXBuildFile; fileRef = 925D208E7158DE5C30F5BF07 /* DiagnosticLog.swift */; };
 		2E9373354D8297BAE80FC7DF /* ModelDiagnostics.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EF617C1886FDBADA6B6C964 /* ModelDiagnostics.swift */; };
 		353EB40FCD87E971E0E3692F /* _MediaGenerationKit in Frameworks */ = {isa = PBXBuildFile; productRef = 6110591102744A89CCDB8714 /* _MediaGenerationKit */; };
@@ -48,6 +49,7 @@
 		6C9B09C8156864D54D956C13 /* CameraOperating.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraOperating.swift; sourceTree = "<group>"; };
 		6FD71742FA6C07A0922FD048 /* melody-camera */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "melody-camera"; path = .; sourceTree = SOURCE_ROOT; };
 		895BDC8162BD00A874F7C845 /* DrawThingsPhoneEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawThingsPhoneEngine.swift; sourceTree = "<group>"; };
+		8DC7DD229213D96A50FF55F4 /* PublicPhotoRegression.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicPhotoRegression.swift; sourceTree = "<group>"; };
 		925D208E7158DE5C30F5BF07 /* DiagnosticLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagnosticLog.swift; sourceTree = "<group>"; };
 		927187B1D6F14798F37AC607 /* DebugProvisioning.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugProvisioning.swift; sourceTree = "<group>"; };
 		9370E209EE61A25D94D9247A /* DemoScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoScene.swift; sourceTree = "<group>"; };
@@ -99,6 +101,7 @@
 				E16369825F6CC10E4933B970 /* PhotoViewer.swift */,
 				68560F3C1DB65454C98E169B /* ProjectViews.swift */,
 				FFC96AA74CA90184051B8DB7 /* ProviderSettings.swift */,
+				8DC7DD229213D96A50FF55F4 /* PublicPhotoRegression.swift */,
 				F5AEF6BAEBC3E1F62D72EA0A /* ReferenceGenerationController.swift */,
 				0A4CD467FB5B3DDFCC4B6D7E /* ReferenceImageClient.swift */,
 				D41F0112675119A59EB853BC /* ReferenceViews.swift */,
@@ -221,6 +224,7 @@
 				6DFFBE6E4426535722FED977 /* PhotoViewer.swift in Sources */,
 				A155E9F6821742FF220068E4 /* ProjectViews.swift in Sources */,
 				1E50E52889AC63A2A61CD3EA /* ProviderSettings.swift in Sources */,
+				27CF48878FF9A9C89D9E4130 /* PublicPhotoRegression.swift in Sources */,
 				B850A3DEAF6658DD8080559F /* ReferenceGenerationController.swift in Sources */,
 				CED3680A67F6E7885CBF8BA8 /* ReferenceImageClient.swift in Sources */,
 				279C4DD20E477A0FCCC6CD29 /* ReferenceViews.swift in Sources */,

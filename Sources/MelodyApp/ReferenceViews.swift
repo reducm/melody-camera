@@ -60,6 +60,7 @@ struct ReferenceCard: View {
                     if design.approvedOutline != nil, let adopted = try? request.plan.adopting(design) {
                         Text("已选用生成图的新轮廓，点击下方跟拍按钮即可使用。").font(.caption).foregroundStyle(Color.melodyLime)
                         ShotTemplatePreview(plan:adopted,outline:nil)
+                        Text(adopted.instruction).font(.caption)
                         Button("恢复知识构图模板") { controller.revokeDesign(job.id) }.font(.caption)
                     }
                     Button(design.approvedOutline == nil ? "核对并选择参考图轮廓" : "重新核对参考图轮廓") { reviewing = true }.font(.caption)

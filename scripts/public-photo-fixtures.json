@@ -1,0 +1,93 @@
+[
+  {
+    "file": "astronaut.png",
+    "url": "https://raw.githubusercontent.com/scikit-image/scikit-image/v0.25.2/skimage/data/astronaut.png",
+    "source": "https://scikit-image.org/docs/0.25.x/api/skimage.data.html",
+    "license": "Public domain",
+    "author": "NASA",
+    "sha256": "88431cd9653ccd539741b555fb0a46b61558b301d4110412b5bc28b5e3ea6cb5",
+    "bytes": 791555,
+    "kind": "person",
+    "shape": "organic",
+    "hasTable": false,
+    "lighting": "soft"
+  },
+  {
+    "file": "chelsea.png",
+    "url": "https://raw.githubusercontent.com/scikit-image/scikit-image/v0.25.2/skimage/data/chelsea.png",
+    "source": "https://scikit-image.org/docs/0.25.x/api/skimage.data.html",
+    "license": "CC0",
+    "author": "Stefan van der Walt",
+    "sha256": "596aa1e7cb875eb79f437e310381d26b338a81c2da23439704a73c4651e8c4bb",
+    "bytes": 240512,
+    "kind": "animal",
+    "shape": "organic",
+    "hasTable": false,
+    "lighting": "soft"
+  },
+  {
+    "file": "coffee.png",
+    "url": "https://raw.githubusercontent.com/scikit-image/scikit-image/v0.25.2/skimage/data/coffee.png",
+    "source": "https://scikit-image.org/docs/0.25.x/api/skimage.data.html",
+    "license": "CC0",
+    "author": "Rachel Michetti",
+    "sha256": "cc02f8ca188b167c775a7101b5d767d1e71792cf762c33d6fa15a4599b5a8de7",
+    "bytes": 466706,
+    "kind": "food",
+    "shape": "flat",
+    "hasTable": true,
+    "lighting": "soft"
+  },
+  {
+    "file": "camera.png",
+    "url": "https://raw.githubusercontent.com/scikit-image/scikit-image/v0.25.2/skimage/data/camera.png",
+    "source": "https://scikit-image.org/docs/0.25.x/api/skimage.data.html",
+    "license": "CC0",
+    "author": "Lav Varshney",
+    "sha256": "b0793d2adda0fa6ae899c03989482bff9a42d3d5690fc7e3648f2795d730c23a",
+    "bytes": 139512,
+    "kind": "person",
+    "shape": "organic",
+    "hasTable": false,
+    "lighting": "unknown"
+  },
+  {
+    "file": "rocket.jpg",
+    "url": "https://raw.githubusercontent.com/scikit-image/scikit-image/v0.25.2/skimage/data/rocket.jpg",
+    "source": "https://scikit-image.org/docs/0.25.x/api/skimage.data.html",
+    "license": "Public domain",
+    "author": "SpaceX",
+    "sha256": "c2dd0de7c538df8d111e479619b129464d0269d0ae5fd18ca91d33a7fdfea95c",
+    "bytes": 112525,
+    "kind": "unknown",
+    "shape": "unknown",
+    "hasTable": false,
+    "lighting": "low"
+  },
+  {
+    "file": "bottle.jpeg",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/5/5a/Coca-Cola_Bottle.jpeg",
+    "source": "https://commons.wikimedia.org/wiki/File:Coca-Cola_Bottle.jpeg",
+    "license": "CC0",
+    "author": "Nicereddy",
+    "sha256": "c9a08cd26bee41e3479e65b538c69c8e6372612261f9417f00e6617a3cfe1dee",
+    "bytes": 455741,
+    "kind": "product",
+    "shape": "cylinder",
+    "hasTable": true,
+    "lighting": "hard"
+  },
+  {
+    "file": "landscape.jpg",
+    "url": "https://upload.wikimedia.org/wikipedia/commons/b/bd/Summer_landscape_in_mountains.jpg",
+    "source": "https://commons.wikimedia.org/wiki/File:Summer_landscape_in_mountains.jpg",
+    "license": "Public domain / US FWS",
+    "author": "U.S. Fish and Wildlife Service",
+    "sha256": "67826d564090ddd426e0e41d0cc1497907f6b9621bd38d8ea442290cd6990621",
+    "bytes": 143553,
+    "kind": "landscape",
+    "shape": "unknown",
+    "hasTable": false,
+    "lighting": "soft"
+  }
+]
