@@ -1,15 +1,34 @@
 name: 验证 Melody 相机
 on:
   push:
+    branches: [main, 'codex/**']
   pull_request:
+  workflow_dispatch:
 permissions:
   contents: read
+concurrency:
+  group: verify-${{ github.ref }}
+  cancel-in-progress: true
+env:
+  DEVELOPER_DIR: /Applications/Xcode_26.6.app/Contents/Developer
+  GIT_LFS_SKIP_SMUDGE: '1'
 jobs:
   verify:
-    runs-on: macos-latest
-    timeout-minutes: 20
+    runs-on: macos-26
+    timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+      - name: 记录构建环境
+        run: |
+          test "$(uname -m)" = arm64
+          xcodebuild -version
+          swift --version
+      - uses: actions/cache@v4
+        with:
+          path: .build/xcode-packages
+          key: spm-${{ runner.os }}-${{ runner.arch }}-xcode26.6-${{ hashFiles('**/Package.resolved') }}
       - name: 运行领域、图像及应用流程测试
         run: swift test
       - name: 构建 Mac 版
@@ -18,4 +37,6 @@ jobs:
         run: >-
           xcodebuild -project MelodyCamera.xcodeproj -scheme MelodyCamera
           -sdk iphonesimulator -destination 'generic/platform=iOS Simulator'
-          -derivedDataPath DerivedData CODE_SIGNING_ALLOWED=NO build
+          -derivedDataPath DerivedData -clonedSourcePackagesDirPath .build/xcode-packages
+          -onlyUsePackageVersionsFromResolvedFile -jobs 3
+          ARCHS=arm64 ONLY_ACTIVE_ARCH=YES CODE_SIGNING_ALLOWED=NO DEVELOPMENT_TEAM= build
