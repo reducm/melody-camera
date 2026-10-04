@@ -338,7 +338,9 @@ enum DirectorMode: String, CaseIterable { case offline = "离线构图", online 
                     return try PhotoProcessor.jpeg(image, quality: 0.75)
                 }.value
                 try Task.checkCancellation()
-                let analyst: any PhotoAnalyzing = backend == .gemma ? GemmaPhotoAnalyst(context:analysisContext) : OnlinePhotoAnalyst(config: configuration, context:analysisContext, transport: photoTransport)
+                let analyst: any PhotoAnalyzing = backend == .gemma ? GemmaPhotoAnalyst(context:analysisContext) : OnlinePhotoAnalyst(config: configuration, context:analysisContext, onResponseRepair: {
+                    DiagnosticLog.shared.record(.warning, .analysis, "已兼容模型 JSON 的 scene 外置格式", detail: "仅修正提前闭合的根对象；完整字段、坐标和倍率校验已通过。未重新请求模型。", operationID: callID)
+                }, transport: photoTransport)
                 let observation = try await ModelDiagnostics.$operationID.withValue(callID) {
                     try await analyst.analyze(frame: .init(jpeg: jpeg, zoom: capturedZoom), availableZooms: availableZooms)
                 }

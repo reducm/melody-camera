@@ -1,0 +1,11 @@
+title = "Melody 密钥检查"
+
+[extend]
+useDefault = true
+
+# DeepSeek/OpenAI 兼容接口的 Key：不依赖变量名或通用规则的熵阈值。
+[[rules]]
+id = "melody-model-api-key"
+description = "模型接口密钥不得进入源码或文档"
+regex = '''\bsk-[A-Za-z0-9_-]{20,}\b'''
+keywords = ["sk-"]

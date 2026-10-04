@@ -55,3 +55,76 @@ private func reportJSON(summary: String = "人物位于画面中央，背景有�
     let planProperties = try #require(item["properties"] as? [String: Any])
     #expect((planProperties["zoom"] as? [String:Any])?["enum"] as? [Double] == [1,2])
 }
+
+private func detachedSceneResponse(base: String? = nil, scene: SceneEvidence = .init()) throws -> String {
+    let report = try base ?? reportJSON(summary: "测试文本含有 }、{ 和转义引号 \"scene\"，不是结构边界。")
+    let encodedScene = String(decoding: try JSONEncoder().encode(scene), as: UTF8.self)
+    // 复现真机返回的结构错误；只用合成文字，不收录用户照片描述。
+    return report + ",\"scene\":" + encodedScene + "}"
+}
+
+private func analyzeResponse(_ content: String, zooms: [Double] = [1]) async throws -> PhotoAnalysis {
+    let data = try JSONSerialization.data(withJSONObject: ["choices": [["message": ["content": content]]]])
+    return try await OnlinePhotoAnalyst(config: .init(baseURL: "https://example.test/v1", model: "vision", apiKey: "test")) { _ in
+        (data, 200)
+    }.analyze(frame: .init(jpeg: Data([1]), zoom: 1), availableZooms: zooms)
+}
+
+@Test func photoPromptExampleIsOneCompleteReportWithScene() throws {
+    let prompt = PhotoAnalysisPrompt.make(availableZooms: [2])
+    let example = try #require(prompt.split(separator: "\n").last)
+    let report = try PhotoAnalysisCodec.decode(String(example), availableZooms: [2])
+    #expect(report.scene != nil)
+}
+
+@Test func onlineAnalysisRecoversOnlyDetachedSceneEnvelope() async throws {
+    var scene = SceneEvidence(); scene.subjectKind = .product; scene.shape = .box
+    for text in [try detachedSceneResponse(scene: scene), "```json\n" + (try detachedSceneResponse(scene: scene)) + "\n```"] {
+        let report = try await analyzeResponse(text)
+        #expect(report.scene == scene)
+        #expect(report.summary.contains("转义引号"))
+        #expect(report.plans.count == 3)
+    }
+}
+
+@Test func onlineAnalysisRejectsAmbiguousOrInvalidSceneRepairs() async throws {
+    let good = try reportJSON()
+    var withScene = try JSONSerialization.jsonObject(with: Data(good.utf8)) as! [String: Any]
+    withScene["scene"] = try JSONSerialization.jsonObject(with: JSONEncoder().encode(SceneEvidence()))
+    let existingScene = String(decoding: try JSONSerialization.data(withJSONObject: withScene), as: UTF8.self)
+    var badScene = SceneEvidence(); badScene.horizonY = 2
+    let detached = try detachedSceneResponse()
+    let cases = [detached + "说明", String(detached.dropLast()), good + good,
+                 good + ",\"other\":{}}", try detachedSceneResponse(base: existingScene),
+                 String(detached.dropLast()) + ",\"other\":true}",
+                 try detachedSceneResponse(scene: badScene),
+                 try detachedSceneResponse(base: reportJSON(duplicate: true)),
+                 try detachedSceneResponse(base: reportJSON(zoom: 8))]
+    for value in cases {
+        await #expect(throws: (any Error).self) { try await analyzeResponse(value) }
+    }
+}
+
+@Test func invalidAnalysisBodyDoesNotBlameImageEndpoint() async {
+    do {
+        _ = try await analyzeResponse("{\"summary\":")
+        Issue.record("损坏的 JSON 不应通过")
+    } catch {
+        #expect(error.localizedDescription.contains("JSON"))
+        #expect(!error.localizedDescription.contains("支持图像"))
+    }
+}
+
+@Test func sceneRepairIsReportedOnlyAfterValidationAndHistoryStaysStrict() throws {
+    var repairs = 0
+    let detached = try detachedSceneResponse()
+    _ = try PhotoAnalysisCodec.decodeModelResponse(detached, availableZooms: [1]) { repairs += 1 }
+    #expect(repairs == 1)
+    _ = try PhotoAnalysisCodec.decodeModelResponse(reportJSON(), availableZooms: [1]) { repairs += 1 }
+    #expect(repairs == 1)
+    #expect(throws: (any Error).self) {
+        try PhotoAnalysisCodec.decodeModelResponse(detachedSceneResponse(base: reportJSON(zoom: 8)), availableZooms: [1]) { repairs += 1 }
+    }
+    #expect(repairs == 1)
+    #expect(throws: (any Error).self) { try PhotoAnalysisCodec.decode(detached, availableZooms: [1]) }
+}

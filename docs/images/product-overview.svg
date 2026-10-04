@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1240" height="422" viewBox="0 0 1240 422" role="img" aria-labelledby="title desc">
+  <title id="title">Melody 相机：从发现画面，到留下喜欢的一张</title>
+  <desc id="desc">产品流程示意：拍照或选图、分析照片、按模板跟拍、保留原片并保存调色副本。实际界面截图另列。</desc>
+  <defs>
+    <linearGradient id="bg" x2="1" y2="1"><stop stop-color="#17251f"/><stop offset="1" stop-color="#101716"/></linearGradient>
+    <linearGradient id="accent" x2="1" y2="1"><stop stop-color="#ffc0d4"/><stop offset="1" stop-color="#e9a1bf"/></linearGradient>
+  </defs>
+  <rect width="1240" height="422" rx="28" fill="url(#bg)"/>
+  <circle cx="1120" cy="35" r="215" fill="#cfed9b" opacity=".035"/>
+  <circle cx="1120" cy="35" r="158" fill="none" stroke="#cfed9b" opacity=".12"/>
+  <g font-family="-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif">
+    <text x="48" y="52" fill="#ecc0d0" font-size="13" letter-spacing="3">MELODY CAMERA</text>
+    <text x="46" y="115" fill="#f5f4ef" font-size="43" font-weight="700">让每一次拍摄，都有下一步。</text>
+    <text x="48" y="153" fill="#aebdb1" font-size="18">看懂画面 · 找到机位 · 带着模板再拍一张</text>
+    <g transform="translate(1040 62)">
+      <rect width="108" height="82" rx="23" fill="url(#accent)"/>
+      <path d="M23 0V-10Q23-17 31-17H54Q62-17 62-10V0" fill="#e9a1bf"/>
+      <circle cx="55" cy="42" r="26" fill="#24332c"/>
+      <circle cx="55" cy="42" r="17" fill="none" stroke="#d5e9b0" stroke-width="4"/>
+      <circle cx="86" cy="19" r="5" fill="#fff3e3"/>
+      <path d="M48 30Q55 25 63 31" fill="none" stroke="#fff" stroke-width="3" stroke-linecap="round" opacity=".6"/>
+    </g>
+    <g transform="translate(48 209)">
+      <rect width="268" height="144" rx="17" fill="#23322a" stroke="#405343"/>
+      <text x="22" y="33" fill="#ecc0d0" font-size="13">01 / 发现画面</text>
+      <text x="22" y="75" fill="#f5f4ef" font-size="24" font-weight="600">从一张照片开始</text>
+      <text x="22" y="109" fill="#b3c2b6" font-size="16">拍照或选图，留在同一项目</text>
+    </g>
+    <g transform="translate(340 209)">
+      <rect width="268" height="144" rx="17" fill="#23322a" stroke="#405343"/>
+      <text x="22" y="33" fill="#ecc0d0" font-size="13">02 / 读懂这一张</text>
+      <text x="22" y="75" fill="#f5f4ef" font-size="24" font-weight="600">把观察变成建议</text>
+      <text x="22" y="109" fill="#b3c2b6" font-size="16">主体、光线、背景与摄影风格</text>
+    </g>
+    <g transform="translate(632 209)">
+      <rect width="268" height="144" rx="17" fill="#cfe7a2"/>
+      <text x="22" y="33" fill="#4c6034" font-size="13">03 / 带着建议再拍</text>
+      <text x="22" y="75" fill="#20321d" font-size="24" font-weight="600">找到下一张的机位</text>
+      <text x="22" y="109" fill="#455d36" font-size="16">构图模板、动作与可选参考图</text>
+    </g>
+    <g transform="translate(924 209)">
+      <rect width="268" height="144" rx="17" fill="#23322a" stroke="#405343"/>
+      <text x="22" y="33" fill="#ecc0d0" font-size="13">04 / 留住喜欢的一张</text>
+      <text x="22" y="75" fill="#f5f4ef" font-size="24" font-weight="600">自然调色，随时回看</text>
+      <text x="22" y="109" fill="#b3c2b6" font-size="16">原片保留，编辑另存副本</text>
+    </g>
+    <g fill="none" stroke="#8fa57c" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <path d="M323 280h10m-4-4 4 4-4 4"/><path d="M615 280h10m-4-4 4 4-4 4"/><path d="M907 280h10m-4-4 4 4-4 4"/>
+    </g>
+    <text x="48" y="391" fill="#9aada0" font-size="13">产品流程示意 · 实际界面与验证边界见下方</text>
+    <text x="1192" y="391" fill="#9aada0" font-size="13" text-anchor="end">SwiftUI · AVFoundation · 本机优先</text>
+  </g>
+</svg>

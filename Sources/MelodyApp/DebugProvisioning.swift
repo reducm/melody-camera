@@ -36,6 +36,29 @@ enum DebugProvisioning {
 /// 只有显式启动参数才执行的真机集成检查，不上传文件，也不访问相册。
 @MainActor extension StudioModel {
     func runDeviceGemmaCheck() async {
+        if ProcessInfo.processInfo.arguments.contains("--melody-check-last-analysis-response") {
+            // 只回放本机日志；不读取照片、不访问网络、不改项目和推荐历史。
+            let file = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0].appendingPathComponent("analysis-response-check.json")
+            var result: [String: Any] = ["source": "本机日志回放，未调用模型或上传照片", "passed": false]
+            do {
+                let entries = await DiagnosticLog.shared.snapshot().entries
+                guard let failed = entries.first(where: { $0.level == .error && $0.category == .analysis }),
+                      let id = failed.operationID,
+                      let output = entries.first(where: { $0.operationID == id && $0.message == "在线模型输出 · HTTP 200" }),
+                      let detail = output.detail, let divider = detail.range(of: "\n\n") else {
+                    throw CompositionError.malformedAnalysis
+                }
+                var repaired = false
+                let observation = try PhotoAnalysisCodec.decodeModelResponse(String(detail[divider.upperBound...]), availableZooms: [0.5, 1, 2]) { repaired = true }
+                let report = try RecommendationEngine.recommend(report: observation, context: .init(), outline: nil, availableZooms: [0.5, 1, 2], capturedZoom: 1)
+                result["passed"] = true; result["repairApplied"] = repaired
+                result["scenePresent"] = observation.scene != nil
+                result["knowledgePlanCount"] = report.plans.count
+                result["sourceErrorID"] = failed.id.uuidString
+            } catch { result["error"] = ModelDiagnostics.errorSummary(error) }
+            try? JSONSerialization.data(withJSONObject: result, options: .sortedKeys).write(to: file, options: .atomic)
+            return
+        }
         #if targetEnvironment(simulator)
         if ProcessInfo.processInfo.arguments.contains("--melody-check-public-photos") {
             let documents = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]

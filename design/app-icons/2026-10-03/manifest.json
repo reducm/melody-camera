@@ -1,0 +1,53 @@
+{
+  "date": "2026-10-03",
+  "status": "历史候选设计；2026-10-04 已选用 03-soft-3d，正式资源见 ios/Assets.xcassets/AppIcon.appiconset",
+  "images": [
+    {
+      "id": "01-cartoon-girl",
+      "name": "卡通女孩",
+      "file": "01-cartoon-girl.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1549309,
+      "sha256": "6748fd16de8df05dcad7d423207e6261f5830ce528aeacd87058ebe8eb7bd424"
+    },
+    {
+      "id": "02-minimal-lens",
+      "name": "极简镜头",
+      "file": "02-minimal-lens.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 985224,
+      "sha256": "233de63ac506740bd95121cfa181828dfd70025490f2ac1c4162e1094e101097"
+    },
+    {
+      "id": "03-soft-3d",
+      "name": "柔软立体",
+      "file": "03-soft-3d.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1503596,
+      "sha256": "d399156946f9fc67144b0575a65d4697790a8625c1c23ee72c6e6e6b95aa3562"
+    },
+    {
+      "id": "04-retro-film",
+      "name": "复古胶片",
+      "file": "04-retro-film.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 2908529,
+      "sha256": "0c4a4a95df17d073348b30472b4770ac7ca537798e68d297fd8048ecc2c3d038"
+    },
+    {
+      "id": "05-abstract-framing",
+      "name": "光影构图",
+      "file": "05-abstract-framing.png",
+      "width": 1254,
+      "height": 1254,
+      "bytes": 1440142,
+      "sha256": "b36e3349c2f4cb71d32e0475ea2a1e7bdb2f6c43c0bd0d42fb11deddc507c562"
+    }
+  ],
+  "selected_id": "03-soft-3d",
+  "selection_date": "2026-10-04"
+}

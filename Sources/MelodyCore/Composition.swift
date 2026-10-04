@@ -30,7 +30,7 @@ public struct ShotPlan: Codable, Equatable, Identifiable, Sendable {
     }
 }
 public enum CompositionError: Error, LocalizedError, Equatable {
-    case invalidPlan, noFrames, invalidEndpoint, missingCredentials, http(Int), malformedResponse
+    case invalidPlan, noFrames, invalidEndpoint, missingCredentials, http(Int), malformedResponse, malformedAnalysis
     public var errorDescription: String? {
         switch self {
         case .invalidPlan: return "模型返回的构图方案不符合要求，请重试或使用离线方案。"
@@ -39,6 +39,7 @@ public enum CompositionError: Error, LocalizedError, Equatable {
         case .missingCredentials: return "请先填写模型名称和 API Key。"
         case .http(let status): return "模型服务返回 HTTP \(status)。请检查权限、额度和模型的视觉能力。"
         case .malformedResponse: return "无法读取模型响应，请使用支持图像输入的 Chat Completions 接口。"
+        case .malformedAnalysis: return "模型已返回内容，但照片分析 JSON 结构不完整或字段类型不符合约定，请重新生成推荐。"
         }
     }
 }

@@ -17,7 +17,7 @@ settings:
   base:
     SWIFT_VERSION: "5.0"
     "EXCLUDED_ARCHS[sdk=iphonesimulator*]": x86_64
-    CURRENT_PROJECT_VERSION: 1
+    CURRENT_PROJECT_VERSION: 3
     MARKETING_VERSION: 0.1.0
     DEVELOPMENT_TEAM: ""
 targets:
@@ -26,6 +26,7 @@ targets:
     platform: iOS
     sources:
       - Sources/MelodyApp
+      - ios/Assets.xcassets
     dependencies:
       - package: DrawThings
         product: _MediaGenerationKit
@@ -37,6 +38,7 @@ targets:
         product: MelodyImaging
     settings:
       base:
+        ASSETCATALOG_COMPILER_APPICON_NAME: AppIcon
         PRODUCT_BUNDLE_IDENTIFIER: com.melody.camera
         TARGETED_DEVICE_FAMILY: "1"
         SUPPORTS_MACCATALYST: NO

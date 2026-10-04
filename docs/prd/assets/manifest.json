@@ -1,0 +1,102 @@
+{
+  "date": "2026-10-04",
+  "note": "PNG 原始文件校验；生成的 JPEG 预览不替代原图。",
+  "files": [
+    {
+      "file": "camera-photo.png",
+      "width": 600,
+      "height": 400,
+      "sha256": "cc02f8ca188b167c775a7101b5d767d1e71792cf762c33d6fa15a4599b5a8de7"
+    },
+    {
+      "file": "p02-photo-picker.png",
+      "width": 1320,
+      "height": 2868,
+      "sha256": "acfbe9e3f0c3c4e4b9d990d1fa80be781570642331ee156c2d328e8c2bab11ce"
+    },
+    {
+      "file": "p03-project.png",
+      "width": 1320,
+      "height": 2868,
+      "sha256": "433fd8700d8c709395d76ccfd40b764302ce50a1a3715ec0843a27bebdfa5eae"
+    },
+    {
+      "file": "p04-analysis-settings.png",
+      "width": 1320,
+      "height": 2868,
+      "sha256": "0c61a09af0945ef1d85e8f4bb4cab42c592311adfb2297427c1b145a531ef8c6"
+    },
+    {
+      "file": "p06-report.png",
+      "width": 1320,
+      "height": 2868,
+      "sha256": "1f181f794b353d3d3921f327688792cc64e820e9bc1cc8152513834ce0573b34"
+    },
+    {
+      "file": "p07-templates.png",
+      "width": 1320,
+      "height": 2868,
+      "sha256": "52aed2f2ab3c13e47f278ab3244ec17fd97d61cc60003c10d971b7c95a5d0a9d"
+    },
+    {
+      "file": "p08-reference-task.png",
+      "width": 1320,
+      "height": 2868,
+      "sha256": "bec2c7bf79796dbf5ad800d9c227837cf8390fd822814398fb54010f862422c9"
+    },
+    {
+      "file": "p12-edit.png",
+      "width": 1320,
+      "height": 2868,
+      "sha256": "ea06780193d72f8b25b2ea86399922acac52669b67cde4d3e4910be3ca473e50"
+    },
+    {
+      "file": "p13-gallery.png",
+      "width": 1320,
+      "height": 2868,
+      "sha256": "ceb9092d58c5aaa02f32655f8e4631321e4e6703151ade68dbd31e4d6253e04e"
+    },
+    {
+      "file": "p14-history.png",
+      "width": 1320,
+      "height": 2868,
+      "sha256": "aec7ff8fb55d3e31ace6221d621f66a09179aa2d546891a6fb9dde06a9325a0c"
+    },
+    {
+      "file": "p15-settings.png",
+      "width": 1320,
+      "height": 2868,
+      "sha256": "c990bbfef57279bd3ae18d1f9a63400f25722f33915eb45e05776f9b34453c66"
+    },
+    {
+      "file": "p17-local-models.png",
+      "width": 1320,
+      "height": 2868,
+      "sha256": "a77c5b0b681b15aa27c22125248862488f4a68b98d9bbbc7bdad58cbb714cde0"
+    },
+    {
+      "file": "p18-logs.png",
+      "width": 1320,
+      "height": 2868,
+      "sha256": "89102de8ac95eddc8c34fc1b5a2c4f68e86e118fa72e1474a4e389a304e914f1"
+    },
+    {
+      "file": "p19-log-detail.png",
+      "width": 1320,
+      "height": 2868,
+      "sha256": "28c3bded46cbf90b6577bd7773d1352237b7cbfe374a6aab35d7d60d683f2b50"
+    },
+    {
+      "file": "p20-rename.png",
+      "width": 1320,
+      "height": 2868,
+      "sha256": "5d45f7e74cec57908d56b959b6b8d8c97458797c07362dda731826a7bba40e51"
+    },
+    {
+      "file": "p21-error.png",
+      "width": 1320,
+      "height": 2868,
+      "sha256": "ff08129bcd4e217b9c773f166aa4cace11b0197158ea8d00057a362b539c3a85"
+    }
+  ]
+}

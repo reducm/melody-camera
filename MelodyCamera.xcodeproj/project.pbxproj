@@ -33,6 +33,7 @@
 		C538A9AE0AE7C07BD0945954 /* CameraController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DBB0750CAAF167B2D36B6E5 /* CameraController.swift */; };
 		CED3680A67F6E7885CBF8BA8 /* ReferenceImageClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A4CD467FB5B3DDFCC4B6D7E /* ReferenceImageClient.swift */; };
 		D98881A8797656BC2C55EECE /* DebugProvisioning.swift in Sources */ = {isa = PBXBuildFile; fileRef = 927187B1D6F14798F37AC607 /* DebugProvisioning.swift */; };
+		DCD4CE208A391D520476E7A5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 898353564249D334DB7DE606 /* Assets.xcassets */; };
 		E37C401ECC8DF1B22A233882 /* DemoScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9370E209EE61A25D94D9247A /* DemoScene.swift */; };
 		EB5812E820DE0AA96EE009A4 /* GemmaPhotoAnalyst.swift in Sources */ = {isa = PBXBuildFile; fileRef = C79AB9A64DF3C46D47A77410 /* GemmaPhotoAnalyst.swift */; };
 /* End PBXBuildFile section */
@@ -49,6 +50,7 @@
 		6C9B09C8156864D54D956C13 /* CameraOperating.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraOperating.swift; sourceTree = "<group>"; };
 		6FD71742FA6C07A0922FD048 /* melody-camera */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "melody-camera"; path = .; sourceTree = SOURCE_ROOT; };
 		895BDC8162BD00A874F7C845 /* DrawThingsPhoneEngine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawThingsPhoneEngine.swift; sourceTree = "<group>"; };
+		898353564249D334DB7DE606 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8DC7DD229213D96A50FF55F4 /* PublicPhotoRegression.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicPhotoRegression.swift; sourceTree = "<group>"; };
 		925D208E7158DE5C30F5BF07 /* DiagnosticLog.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiagnosticLog.swift; sourceTree = "<group>"; };
 		927187B1D6F14798F37AC607 /* DebugProvisioning.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DebugProvisioning.swift; sourceTree = "<group>"; };
@@ -116,6 +118,7 @@
 		821B8614A27995C8077B2FCD = {
 			isa = PBXGroup;
 			children = (
+				D8F7EFCE8499AA8DAC1CFB34 /* ios */,
 				6B7EB51243A7C63526B28DDB /* MelodyApp */,
 				C177D34DB634891EEE39C450 /* Packages */,
 				E3DDA1B2CA4CCA035EB0C60F /* Products */,
@@ -128,6 +131,14 @@
 				6FD71742FA6C07A0922FD048 /* melody-camera */,
 			);
 			name = Packages;
+			sourceTree = "<group>";
+		};
+		D8F7EFCE8499AA8DAC1CFB34 /* ios */ = {
+			isa = PBXGroup;
+			children = (
+				898353564249D334DB7DE606 /* Assets.xcassets */,
+			);
+			path = ios;
 			sourceTree = "<group>";
 		};
 		E3DDA1B2CA4CCA035EB0C60F /* Products */ = {
@@ -146,6 +157,7 @@
 			buildConfigurationList = DB461E5231D4A188F873036A /* Build configuration list for PBXNativeTarget "MelodyCamera" */;
 			buildPhases = (
 				F1B07ED183E1E5532D57B019 /* Sources */,
+				ADF20F2611765DEBB182AB0C /* Resources */,
 				C6835E492F3AA03AA935800E /* Frameworks */,
 			);
 			buildRules = (
@@ -201,6 +213,17 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		ADF20F2611765DEBB182AB0C /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DCD4CE208A391D520476E7A5 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		F1B07ED183E1E5532D57B019 /* Sources */ = {
@@ -271,7 +294,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 3;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = "";
 				ENABLE_NS_ASSERTIONS = NO;
@@ -350,7 +373,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 3;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				DEVELOPMENT_TEAM = "";
 				ENABLE_STRICT_OBJC_MSGSEND = YES;

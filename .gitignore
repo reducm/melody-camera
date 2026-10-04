@@ -12,6 +12,7 @@ artifacts/
 *.gguf
 
 __pycache__/
+.playwright-cli/
 
 # 本机模型、运行产物与签名材料
 *.ckpt
@@ -43,3 +44,37 @@ build/
 /Projects/
 /ReferenceDrafts/
 /Diagnostics/
+
+# 一次性设备配置与个人覆盖文件（任何目录都不应提交真实凭据）
+melody-provider-once.json
+melody-reference-once.json
+*.local.json
+*.local.xcconfig
+/Config/Local.xcconfig
+/Config/Private.xcconfig
+secrets.json
+credentials.json
+!/melody-provider-once.example.json
+!/melody-reference-once.example.json
+
+# 额外私钥、钥匙串与个人签名文件；不影响公开许可证和配置示例
+*.pem
+*.key
+*.p8
+*.keychain
+*.keychain-db
+*.cer
+*.csr
+
+# 从设备取回的模型/回归数据与原始响应
+/Gemma/
+/DrawThingsModels/
+/ProjectChecks/
+/PublicPhotoFixtures/
+/PublicPhotoResults/
+gemma-check-raw.txt
+deepseek-check-raw.txt
+
+# 扫描报告可能包含路径等本机信息，长期结论只写入脱敏验证记录
+gitleaks-report.*
+.gitleaks-report.*
