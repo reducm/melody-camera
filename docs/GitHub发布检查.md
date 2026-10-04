@@ -1,6 +1,6 @@
 # GitHub 发布检查
 
-更新：2026-10-04。本文用于源码提交和推送前检查，不表示已授权推送、公开仓库或发布安装包。
+更新：2026-10-04。本文用于源码提交和推送前检查。用户已单独授权首次合并与推送，`main` 已同步至 [reducm/melody-camera](https://github.com/reducm/melody-camera)；本文本身不构成未来推送或发布安装包的授权。
 
 ## Key 当前在哪里
 
@@ -55,6 +55,6 @@ python3 scripts/check-secrets.py
 - 个人 Team 仍在共享工程中；本机签名覆盖配置尚待拆分，`project.yml` 与生成工程需同步。
 - 根项目许可证与完整第三方声明尚待决定；Draw Things 引擎及适配代码涉及 GPL-3.0，模型/素材许可另行记录。
 - Gemma 已有固定下载与导入；Qwen 目前仍是开发容器安装，需要可复现安装工具，普通用户下载管理尚未实现。
-- 完成全新克隆依赖解析、Swift / iOS 构建与无 Key/无模型状态检查；GitHub Actions 尚未实际远程运行，runner/Xcode/arm64/LFS/缓存还需核对。
+- 完成全新克隆依赖解析、Swift / iOS 构建与无 Key/无模型状态检查；首次 GitHub Actions 已触发，结果见 [Actions](https://github.com/reducm/melody-camera/actions)，runner/Xcode/arm64/LFS/缓存仍需按实际结果核对。
 
-README 与忽略规则的本轮完善不代表以上事项已经完成。没有自动重写历史、创建远程、提交或推送。
+README 与忽略规则的本轮完善不代表以上事项已经完成。首次推送保留原历史，仅快进合并开发分支并设置 `main` 上游；未使用强制推送，未上传模型权重、私人配置或构建产物。
