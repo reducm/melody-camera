@@ -1,6 +1,6 @@
 # GitHub 发布检查
 
-更新：2026-10-04。本文用于源码提交和推送前检查。用户已单独授权首次合并与推送，`main` 已同步至 [reducm/melody-camera](https://github.com/reducm/melody-camera)；本文本身不构成未来推送或发布安装包的授权。
+更新：2026-10-05。本文用于源码提交和推送前检查。用户已授权首次合并、推送及开发预览发布，`main` 已同步至 [reducm/melody-camera](https://github.com/reducm/melody-camera)，[v0.1.0-preview.1](https://github.com/reducm/melody-camera/releases/tag/v0.1.0-preview.1) 已发布；本文本身不构成未来推送或发布的授权。
 
 ## Key 当前在哪里
 
@@ -50,11 +50,11 @@ python3 scripts/check-secrets.py
 
 `git diff --cached` 在本机人工审阅即可，不把可能含敏感信息的输出粘贴到公共讨论。检查公开截图、素材许可、模型结果来源标记，以及所有拟推送分支的 Git 作者邮箱；作者邮箱不属于 API Key，但公开历史会保留它。
 
-## 仍待完成的发布准备
+## 分发准备状态
 
 - 个人签名配置已拆分至忽略的 `Config/Local.xcconfig`，`project.yml` 与生成工程已同步；换机需自行填写。
 - 项目已采用 GPL-3.0-only，根 LICENSE、第三方声明和依赖许可收集已加入；以后升级依赖仍须复核条款，模型/素材许可另行保留。
 - Gemma 已有固定下载与导入；Qwen 目前仍是开发容器安装，需要可复现安装工具，普通用户下载管理尚未实现。
-- 完成全新克隆依赖解析、Swift / iOS 构建与无 Key/无模型状态检查；首次 GitHub Actions 已触发，结果见 [Actions](https://github.com/reducm/melody-camera/actions)，runner/Xcode/arm64/LFS/缓存仍需按实际结果核对。
+- 干净 runner 的 Swift/Mac 和双平台 Release 构建已通过，固定 Xcode/arm64/LFS/缓存配置已验证。本机同提交的无 Key/无模型模拟器 ZIP 可安装启动；云端 ZIP 回下载安装与未签名 IPA 的自行签名流程尚未实测。
 
 README 与忽略规则的本轮完善不代表以上事项已经完成。首次推送保留原历史，仅快进合并开发分支并设置 `main` 上游；未使用强制推送，未上传模型权重、私人配置或构建产物。

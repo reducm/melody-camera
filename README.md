@@ -7,6 +7,7 @@
 <p align="center"><strong>把喜欢的人，拍成喜欢的样子。</strong></p>
 <p align="center">中文 iOS 拍摄陪伴 · 摄影知识推荐 · 手机本地参考图 · 原片始终保留</p>
 <p align="center">
+  <a href="https://github.com/reducm/melody-camera/releases/tag/v0.1.0-preview.1">下载预览版</a> ·
   <a href="#界面预览">界面预览</a> ·
   <a href="#产品原型与流程">产品原型</a> ·
   <a href="#开始体验">开始体验</a> ·
@@ -67,7 +68,7 @@ cd melody-camera
 
 ### 预发布下载
 
-[GitHub Releases](https://github.com/reducm/melody-camera/releases) 提供开发预览：iPhone arm64 未签名 IPA（需自行签名后安装）、Apple Silicon iOS 模拟器包、源码与 SHA-256 校验文件。两种应用包均不含模型权重或 API Key；打包与安装方法见 [Release 构建说明](docs/Release构建.md)。
+首个预览版 [v0.1.0-preview.1](https://github.com/reducm/melody-camera/releases/tag/v0.1.0-preview.1) 已发布：iPhone arm64 未签名 IPA（需自行签名后安装）、Apple Silicon iOS 模拟器包、源码与 SHA-256 校验文件。两种应用包均不含模型权重或 API Key；打包与安装方法见 [Release 构建说明](docs/Release构建.md)。
 
 ### iPhone 与模拟器
 

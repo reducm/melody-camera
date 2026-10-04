@@ -1,6 +1,6 @@
 # GitHub Release 构建与安装
 
-更新：2026-10-04。用户已授权配置并发布首个开发预览，选择同时提供 iPhone IPA 与模拟器包，并授权采用开放许可。项目采用 GPL-3.0-only，第三方权利与来源见 [声明](../THIRD_PARTY_NOTICES.md)。实际运行结果以 [验证记录](验证记录.md) 为准。
+更新：2026-10-05。首个开发预览 [v0.1.0-preview.1](https://github.com/reducm/melody-camera/releases/tag/v0.1.0-preview.1) 已发布，提供未签名 iPhone IPA 与 arm64 模拟器包。用户已授权配置、发布与许可选择；项目采用 GPL-3.0-only，第三方权利与来源见 [声明](../THIRD_PARTY_NOTICES.md)。Actions 四个 job 全部成功，实际运行结果与未验范围见 [验证记录](验证记录.md)。
 
 ## 产物
 
